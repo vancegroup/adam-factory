@@ -27,9 +27,19 @@ milling  = Transform{
 	Model("Factory Models/OSG/Machines/milling machine.osg"),
 }
 roller = Transform{
-	orientation = AngleAxis
 	Model("Factory Models/OSG/Assembly Line/Rollers.osg"),
 }
+roller2 = Transform{
+	orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
+	Model("Factory Models/OSG/Assembly Line/Rollers.osg"),
+}
+Pallet = Transform{
+	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg")
+}	
+HVAC = Transform{
+	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"),
+}
+	
 rollerGroup = Group{
 	Transform {
 		position = {-11,0,-13},
@@ -43,30 +53,7 @@ rollerGroup = Group{
 		position = {-6.6,0,-13},
 		roller,
 	},
-		Transform {
-		position = {-3,0,-11},
-		roller,
-	},
-		Transform {
-		position = {2.5,0,-9},
-		roller,
-	},
-		Transform {
-		position = {2.5,0,-6.8},
-		roller,
-	},
-		Transform {
-		position = {2.5,0,-4.6},
-		roller,
-	},
-		Transform {
-		position = {2.5,0,-2.4},
-		roller,
-	},
-		Transform {
-		position = {2.5,0,-0.2},
-		roller,
-	},
+		
 		Transform {
 		position = {-3,0,-15},
 		roller,
@@ -91,43 +78,132 @@ rollerGroup = Group{
 		position = {8.2,0,-15},
 		roller,
 	},
-		Transform {
-		position = {13.8,0,-13},
-		roller,
-	},
-	Transform {
-		position = {13.8,0,-10.8},
-		roller,
-	},
-	Transform {
-		position = {13.8,0,-8.6},
-		roller,
-	},
-	Transform {
-		position = {13.8,0,-6.4},
-		roller,
-	},
-	Transform {
-		position = {13.8,0,-4.4},
-		roller,
-	},
-		Transform {
-		position = {13.8,0,-2.4},
-		roller,
-	},
-}
-RelativeTo.World:addChild(factory)
-factory:addChild(room)	
---factory:addChild(milling)
---factory:addChild(Lathe)
---factory:addChild(robot)
---factory:addChild(robot2)
---factory:addChild(robot3)
-factory:addChild(rollerGroup)
---[[
 	
 }
 
+rollerGroup2 = Group{
+	Transform {
+		position = {-1.5,0,-13.5},
+		roller2,
+	},
+		Transform {
+		position = {-1.5,0,-11.3},
+		roller2,
+	},
+		Transform {
+		position = {-1.5,0,-9.1},
+		roller2,
+	},
+		Transform {
+		position = {-1.5,0,-6.9},
+		roller2,
+	},
+		Transform {
+		position = {-1.5,0,-4.7},
+		roller2,
+	},
+	Transform {
+		position = {13.8,0,-13},
+		roller2,
+	},
+	Transform {
+		position = {13.8,0,-10.8},
+		roller2,
+	},
+	Transform {
+		position = {13.8,0,-8.6},
+		roller2,
+	},
+	Transform {
+		position = {13.8,0,-6.4},
+		roller2,
+	},
+	Transform {
+		position = {13.8,0,-4.4},
+		roller2,
+	},
+		Transform {
+		position = {13.8,0,-2.4},
+		roller2,
+	}
+}
+
+palletGroup = Group{
+	Transform{
+		position = {-9,0,-2.4},
+		Pallet,
+	},
+	Transform{
+		position = {-9,0,-2.4},
+		Pallet,
+	},	
+	Transform{
+		position = {-9,0,-2.4},
+		Pallet,
+	},	
+	Transform{
+		position = {-9,0,-2.4},
+		Pallet,
+	},	
+	Transform{
+		position = {-9,0,-2.4},
+		Pallet,
+	},	
+	Transform{
+		position = {-9,0,-2.4},
+		Pallet,
+	},	
+	Transform{
+		position = {-9,0,-2.4},
+		Pallet,
+	},	
+	Transform{
+		position = {-9,0,-2.4},
+		Pallet,
+	},	
+}
+
+HVACGroup = Group{
+Transform{
+		position = {-3.2,7,-10},,
+		HVAC,
+	},
+Transform{
+		position = {-3.2,7,0},
+		HVAC,
+	},
+Transform{
+		position = {-3.2,7,5},
+		HVAC,
+	},
+Transform{
+		position = {3.7,7,-10},
+		HVAC,
+	},
+	Transform{
+		position = {3.7,7,0},
+		HVAC,
+	},
+Transform{
+		position = {10.6,7,-10},
+		HVAC,
+	},
+Transform{
+		position = {3.7,7,5},
+		HVAC,
+	},	
+Transform{
+		position = {10.6,7,0},
+		HVAC,
+	},	
+Transform{
+		position = {10.6,7,5},
+		HVAC,
+	},	
+}	
+
+
+	
 robot = Transform {
 	position = {-3,0,-12},
 	Model("Factory Models/OSG/Machines/Robot.osg"),
@@ -312,46 +388,8 @@ Barrel6 =Transform{
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Storage and Barrels/OilBarrels.osg"), 
 }	
-Pallet =Transform{
-	position = {-9,0,-2.4},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg"), 
-}	
-Pallet1 =Transform{
-	position = {-9,0,-2.4},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg"), 
-}	
-Pallet2 =Transform{
-	position = {-9,0,-2.4},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg"), 
-}	
-Pallet3 =Transform{
-	position = {-9,0,-2.4},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg"), 
-}	
-Pallet4 =Transform{
-	position = {-9,0,-2.4},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg"), 
-}	
-Pallet5 =Transform{
-	position = {-9,0,-2.4},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg"), 
-}	
-Pallet6 =Transform{
-	position = {-9,0,-2.4},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg"), 
-}	
-Pallet7 =Transform{
-	position = {-9,0,-2.4},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg"), 
-}	
+
+
 Wrenches =Transform{
 	position = {-1,1,0},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
@@ -402,51 +440,7 @@ Diffuser9 =Transform{
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Structural/HVACdiffuser.osg"), 
 	}
-HVAC=Transform{
-	position = {-3.2,7,-10},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
-HVAC2=Transform{
-	position = {-3.2,7,0},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
-HVAC3=Transform{
-	position = {-3.2,7,5},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
-HVAC4=Transform{
-	position = {3.7,7,-10},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
-HVAC5=Transform{
-	position = {3.7,7,0},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
-HVAC6=Transform{
-	position = {3.7,7,5},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
-HVAC7=Transform{
-	position = {10.6,7,-10},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
-HVAC8=Transform{
-	position = {10.6,7,0},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
-HVAC9=Transform{
-	position = {10.6,7,5},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"), 
-}
+
 Beam1=Transform{
 	position = {-1.6,0,-2},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
@@ -467,8 +461,17 @@ Beam4=Transform{
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Structural/beam.osg"), 
 }
-
-
+RelativeTo.World:addChild(factory)
+factory:addChild(room)	
+factory:addChild(milling)
+--factory:addChild(Lathe)
+factory:addChild(robot)
+factory:addChild(robot2)
+--factory:addChild(robot3)
+factory:addChild(rollerGroup)
+factory:addChild(rollerGroup2)
+factory:addChild(palletGroup)
+factory:addChild(HVACGroup)
 
 --factory:addChild(cnc)
 factory:addChild(StorageBinBlue)
@@ -507,14 +510,6 @@ factory:addChild(Barrel4)
 factory:addChild(Barrel5)
 factory:addChild(Barrel6)
 
-factory:addChild(Pallet)
-factory:addChild(Pallet1)
-factory:addChild(Pallet2)
-factory:addChild(Pallet3)
-factory:addChild(Pallet4)
-factory:addChild(Pallet5)
-factory:addChild(Pallet6)
-factory:addChild(Pallet7)
 Workbench3:addChild(Wrenches)
 
 factory:addChild(Diffuser1)
@@ -526,18 +521,9 @@ factory:addChild(Diffuser6)
 factory:addChild(Diffuser7)
 factory:addChild(Diffuser8)
 factory:addChild(Diffuser9)
-factory:addChild(HVAC)
-factory:addChild(HVAC2)
-factory:addChild(HVAC3)
-factory:addChild(HVAC4)
-factory:addChild(HVAC5)
-factory:addChild(HVAC6)
-factory:addChild(HVAC7)
-factory:addChild(HVAC8)
-factory:addChild(HVAC9)
+
 
 factory:addChild(Beam1)
 factory:addChild(Beam2)
 factory:addChild(Beam3)
 factory:addChild(Beam4)
-]]--
