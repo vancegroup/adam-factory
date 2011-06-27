@@ -3,10 +3,7 @@ dofile([[X:\users\lpberg\VRJuggLua\examples\movetools.lua]])
 --vrjLua.appendToModelSearchPath([[X:/users/lpberg/VRJuggLua/models/]])
 require("Actions")
 require("getScriptFilename")
-fn = getScriptFilename()
-print(fn)
-assert(fn, "Have to load this from file, not copy and paste, or we can't find our models!")
-vrjLua.appendToModelSearchPath(fn)
+vrjLua.appendToModelSearchPath(getScriptFilename())
 
 
 --Origin Sphere Representation
