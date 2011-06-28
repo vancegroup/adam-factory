@@ -36,6 +36,22 @@ Pallet = Transform{
 HVAC = Transform{
 	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"),
 }
+Diffuser = Transform{
+	Model("Factory Models/OSG/Structural/HVACdiffuser.osg"), 
+}
+
+Workbench = Transform{
+	orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
+	Model("Factory Models/OSG/Workbench/Work Bench.osg"),
+}	
+
+Beam = Transform{
+	Model("Factory Models/OSG/Structural/beam.osg"), 
+}
+
+Barrel = Transform{
+	Model("Factory Models/OSG/Storage and Barrels/OilBarrels.osg"), 
+}
 	
 rollerGroup = Group{
 	Transform {
