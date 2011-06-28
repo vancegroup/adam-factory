@@ -1,3 +1,4 @@
+--Factory
 dofile([[X:\users\lpberg\VRJuggLua\examples\lys\litfactory.lua]])
 vrjLua.appendToModelSearchPath([[X:/users/lpberg/VRJuggLua/models/]])
 require("getScriptFilename")
