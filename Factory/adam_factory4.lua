@@ -57,7 +57,10 @@ Beam = Transform{
 Barrel = Transform{
 	Model("Factory Models/OSG/Storage and Barrels/OilBarrels.osg"), 
 }
-	
+HoseReel = Transform{
+	Model("Factory Models/OSG/Tools/Hose Reel.osg"),
+}
+
 rollerGroup = Group{
 	Transform {
 		position = {-11,0,-13},
@@ -324,8 +327,20 @@ Transform{
 		Barrel,
 },
 }
-
-
+HoseReelGroup = Group{
+	Transform{
+		position = {1,7.5,-10},
+		HoseReel,
+},
+	Transform{		
+		position = {1,7.5,-6},
+		HoseReel,
+},
+	Transform{
+		position = {1,7.5,-2},
+		HoseReel,
+},
+}
 robot = Transform {
 	position = {-3,0,-12},
 	Model("Factory Models/OSG/Machines/Robot.osg"),
@@ -363,9 +378,9 @@ StorageBinGreen = Transform{
 	Model("Factory Models/OSG/Storage and Barrels/Storage Bin2Green.osg"),
 }
 Lathe =Transform{
-	position = {-9,0,-6},
-	orientation = AngleAxis(Degrees(30), Axis{0,1,0}),
-	Model("Factory Models/OSG/Machines/mini_lathe.osg"),
+	position = {8,0,-4},
+	orientation = AngleAxis(Degrees(90), Axis{0,1,0}),
+	Model("Factory Models/OSG/Machines/lathe.osg"),
 }
 Compressor =Transform{
 	position = {7,0,-10.5},
@@ -443,7 +458,7 @@ RelativeTo.World:addChild(factory)
 factory:addChild(room)	
 
 factory:addChild(milling)
---factory:addChild(Lathe)
+factory:addChild(Lathe)
 factory:addChild(robot)
 factory:addChild(robot2)
 
@@ -455,6 +470,7 @@ factory:addChild(DiffuserGroup)
 factory:addChild(WorkbenchGroup)
 factory:addChild(BeamGroup)
 factory:addChild(BarrelGroup)
+factory:addChild(HoseReelGroup)
 --factory:addChild(cnc)
 factory:addChild(StorageBinBlue)
 factory:addChild(StorageBinRed)
