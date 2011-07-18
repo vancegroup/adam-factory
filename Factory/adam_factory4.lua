@@ -475,7 +475,7 @@ packaging = Transform{
 	Model("Factory Models/OSG/Assembly Line/packaging.osg"), 
 }
 Ladder = Transform{
-position = {10,0,-19},
+position = {12,.5,-19},
 	orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Structural/Ladder.osg"), 
 }
