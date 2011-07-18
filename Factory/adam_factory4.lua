@@ -24,7 +24,7 @@ room = Transform{
 }	
 
 milling  = Transform{
-	position = {9.5,0,-9},
+	position = {8,0,-9},
 	orientation = AngleAxis(Degrees(-90), Axis{0.0, 1.0, 0.0}),
 	Model("Factory Models/OSG/Machines/milling machine.osg"),
 }
@@ -60,7 +60,24 @@ Barrel = Transform{
 HoseReel = Transform{
 	Model("Factory Models/OSG/Tools/Hose Reel.osg"),
 }
-
+FireExtenguisher = Transform{
+	Model("Factory Models/OSG/Tools/Fire_extinguisher.osg"),
+	position = {0,1.5,.35},
+}	
+Wrenches = Transform{
+	Model("Factory Models/OSG/Tools/wrenches.osg"),
+	position = {-1,.93,0},
+}
+Chair = Transform{
+	position = {-1,0,0},
+	orientation = AngleAxis(Degrees(180), Axis{0,1,0}),
+	Model("Factory Models/OSG/Workbench/Industrial Chair.osg"),
+}
+Computer = Transform{
+	position = {0,0,-1.5},
+	orientation = AngleAxis(Degrees(0), Axis{0,1,0}),
+	Model("Factory Models/OSG/Machines/Computer.osg"),
+}
 rollerGroup = Group{
 	Transform {
 		position = {-11,0,-13},
@@ -268,18 +285,17 @@ WorkbenchGroup = Group{
 },
 	Transform{
 	position ={7,0,-13},
+	
 	Workbench,
 },
 	Transform{
 	position = {11.2,0,-13},
+	orientation = AngleAxis(Degrees(180), Axis{0,1,0}),
 	Workbench,
 },
 	Transform{
 	position ={11.2,0,-9},
-	Workbench,
-},
-	Transform{
-	position =  {11.2,0,-5},
+	orientation = AngleAxis(Degrees(180), Axis{0,1,0}),
 	Workbench,
 },
 }
@@ -350,12 +366,6 @@ robot2 = Transform {
 	--orientation = AngleAxis(Degrees(180), Axis{0.0,1.0,0.0}),
 	Model("Factory Models/OSG/Machines/Robot.osg"),
 }
-	
-cnc = Transform{
-	position = {-2,0,-4},
-	orientation = AngleAxis(Degrees(-90), Axis{0.0,1.0,0.0}),
-	Model("Factory Models/OSG/Machines/CNC.osg"),
-}
 
 StorageBinBlue = Transform{
 	position = {-1.5,0,-13.7},
@@ -368,8 +378,8 @@ StorageBinRed = Transform{
 	Model("Factory Models/OSG/Storage and Barrels/Storage Bin2Red.osg"),
 }
 StorageBinYellow = Transform{
-	position = {12.9,0,-2},
-	orientation = AngleAxis(Degrees(90), Axis{0,1,0}),
+	position = {15.5,0,-8.8},
+	orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Storage and Barrels/Storage Bin2Yellow.osg"),
 }
 StorageBinGreen = Transform{
@@ -378,7 +388,7 @@ StorageBinGreen = Transform{
 	Model("Factory Models/OSG/Storage and Barrels/Storage Bin2Green.osg"),
 }
 Lathe =Transform{
-	position = {8,0,-4},
+	position = {8,0,4},
 	orientation = AngleAxis(Degrees(90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Machines/lathe.osg"),
 }
@@ -388,32 +398,29 @@ Compressor =Transform{
 	Model("Factory Models/OSG/Tools/air compressor.osg"),
 }
 ToolBox =Transform{
-	position = {3,0,-6},
+	position = {4.1,0,-6},
 	orientation = AngleAxis(Degrees(180), Axis{0,1,0}),
 	Model("Factory Models/OSG/Workbench/Snapon Tool Box.osg"),
 }	
-Chair=Transform{
-	position = {-8,0,2},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Workbench/Industrial Chair.osg"),
-}	
+	
 Welder=Transform{
 	position = {-8,.5,-3},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Tools/Mig Welding Cart.osg"),
 }	
 DrillPress = Transform{
-	position = {4.2,0,-6},
+	position = {5.2,0,-6},
 	orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Machines/Drill Press.osg"),
 }
 BandSaw = Transform{
-	position = {2.2,0,-2},
+	--ebugAxes.node,
+	position = {3,0,-2},
 	orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Machines/bandsaw.osg"),
 }
 RP = Transform{
-	position = {2.2,0,-10},
+	position = {3.2,0,-10},
 	orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Machines/Rapid Prototype.osg"),
 }
@@ -447,12 +454,33 @@ GarageDoor2 = Transform{
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg"), 
 }	
+GarageDoor3=Transform{
+	position = {16.5,0,-16},
+	orientation = AngleAxis(Degrees(180), Axis{0,1,0}),
+	Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg"), 
+}	
+GarageDoor4=Transform{
+	position = {16.5,0,-12},
+	orientation = AngleAxis(Degrees(180), Axis{0,1,0}),
+	Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg"), 
+}	
 ForkliftPath =Transform{
-	position = {-8,.01,2},
+	position = {-8,.01,5},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
 	Model("Factory Models/OSG/Shop Carts and Fort Lifts/Path.osg"), 
 }	
-
+packaging = Transform{
+	position = {14.18,.001,7},
+	orientation = AngleAxis(Degrees(90), Axis{0,1,0}),
+	Model("Factory Models/OSG/Assembly Line/packaging.osg"), 
+}
+Ladder = Transform{
+position = {10,0,-19},
+	orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
+	Model("Factory Models/OSG/Structural/Ladder.osg"), 
+}
+--DebugAxes.show()
+--DebugAxes.hide()
 
 RelativeTo.World:addChild(factory)
 factory:addChild(room)	
@@ -471,7 +499,7 @@ factory:addChild(WorkbenchGroup)
 factory:addChild(BeamGroup)
 factory:addChild(BarrelGroup)
 factory:addChild(HoseReelGroup)
---factory:addChild(cnc)
+
 factory:addChild(StorageBinBlue)
 factory:addChild(StorageBinRed)
 factory:addChild(StorageBinYellow)
@@ -483,7 +511,7 @@ factory:addChild(Compressor)
 
 
 factory:addChild(ToolBox)
-factory:addChild(Chair)
+
 factory:addChild(Welder)
 factory:addChild(DrillPress)
 factory:addChild(BandSaw)
@@ -492,18 +520,22 @@ factory:addChild(MetalBender)
 --factory:addChild(WaterJet) 
 factory:addChild(ShopCart) 
 factory:addChild(OpenCart) 
-
+factory:addChild(Ladder)
 factory:addChild(GarageDoor1)
 factory:addChild(GarageDoor2)
-
+factory:addChild(GarageDoor3)
+factory:addChild(GarageDoor4)
+factory:addChild(packaging)
 --factory:addChild(ForkliftPath)
-
-
-
-
+factory:addChild(Ladder)
+Beam:addChild(FireExtenguisher)
+Workbench:addChild(Wrenches)
+Workbench:addChild(Chair)
+Workbench:addChild(Computer)
 forkliftmatrix = osg.MatrixTransform()
+
 forklift = Transform {
-	position = {8,0,4},
+	position = {8,0,1},
 	Model("Factory Models/OSG/Shop Carts and Fort Lifts/Forklift.osg"),
 }	
 forkliftmatrix:addChild(forklift)
