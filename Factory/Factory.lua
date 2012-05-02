@@ -57,7 +57,7 @@ FireExtenguisher = Transform{
 }	
 Wrenches = Transform{
 	Model("Factory Models/OSG/Tools/wrenches.osg"),
-	position = {-1,.93,0},
+	position = {-1,.875,0},
 }
 Chair = Transform{
 	position = {-1,0,0},
