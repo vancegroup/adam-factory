@@ -53,7 +53,7 @@ HoseReel = Transform{
 }
 FireExtenguisher = Transform{
 	Model("Factory Models/OSG/Tools/Fire_extinguisher.osg"),
-	position = {0,1.5,.35},
+	position = {0,1.5,.245},
 }	
 Wrenches = Transform{
 	Model("Factory Models/OSG/Tools/wrenches.osg"),
