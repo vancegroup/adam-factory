@@ -15,7 +15,7 @@ room = Transform{
 }	
 
 milling  = Transform{
-	position = {8,0,-9},
+	position = {7,0,-9},
 	orientation = AngleAxis(Degrees(-90), Axis{0.0, 1.0, 0.0}),
 	Model("Factory Models/OSG/Machines/milling machine.osg"),
 }
