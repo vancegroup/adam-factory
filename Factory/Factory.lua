@@ -3,7 +3,7 @@ require("DebugAxes")
 require("getScriptFilename")
 vrjLua.appendToModelSearchPath(getScriptFilename())
 dofile(vrjLua.findInModelSearchPath("forklift_function.lua"))
-
+--dofile(vrjLua.findInModelSearchPath([[simpleLights.lua]]))
 
 factory = Transform{
 	position = {0,0,0},
