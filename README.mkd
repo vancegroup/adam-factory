@@ -1,0 +1,35 @@
+SPARTA Factory Model
+====================
+
+This detailed factory environment, sometimes known as the "Adam Factory" after the student who put it together, @adamc17, is rich for use in an immersive environment.
+
+Scripts
+-------
+
+### Startup Scripts
+
+- `Factory/standalone_main.lua`
+    - This script can be used with VR JuggLua NavTestbed to simply load the environment for exploration.
+
+- `Factory/loadIntoSparta.lua`
+    - This script can be run within SPARTA to have this environment replace the existing SPARTA environment.
+
+### Internals
+
+- `Factory/Factory.lua`
+    - This script performs all of the hard work: it loads the models, places them in transforms, etc.  It returns the root node of the fully assembled factory.
+
+- `Factory/forklift_function.lua`
+    - An animation script that seems to not be currently used, but is run within `Factory.lua`
+
+- `Factory/simpleLights.lua`
+    - This script sets up appealing lighting for the environment.
+
+Model Sources
+-------------
+To the best of my ([Ryan Pavlik][rpavlik] @rpavlik) knowledge as of October 2012, all models with the exception of `basicfactory.ive` are from the [Trimble (formerly Google) SketchUp 3D Warehouse][3dwarehouse].
+
+`basicfactory.ive` was created by [Ryan Pavlik][rpavlik] at Iowa State University's Virtual Reality Applications Center.
+
+[rpavlik]:http://academic.cleardefinition.com/
+[3dwarehouse]:http://sketchup.google.com/3dwarehouse/
