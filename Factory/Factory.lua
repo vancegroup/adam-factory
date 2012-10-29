@@ -8,6 +8,7 @@ dofile(vrjLua.findInModelSearchPath("forklift_function.lua"))
 factory = Transform{
 	position = {0, 0, 0},
 }
+
 room = Transform{
 	position = {-10, 0, 5},
 	scale = 1.65,
@@ -20,22 +21,18 @@ milling = Transform{
 	Model("Factory Models/OSG/Machines/milling machine.osg"),
 }
 
-roller = Transform{
-	Model("Factory Models/OSG/Assembly Line/Rollers.osg"),
-}
+roller = Model("Factory Models/OSG/Assembly Line/Rollers.osg")
 
 roller2 = Transform{
 	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
 	Model("Factory Models/OSG/Assembly Line/Rollers.osg"),
 }
 
-Pallet = Transform{
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg")
-}
+Pallet = Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg")
 
-HVAC = Transform{
-	Model("Factory Models/OSG/Structural/HVAC48Tube.osg"),
-}
+
+HVAC = Model("Factory Models/OSG/Structural/HVAC48Tube.osg"),
+
 
 Diffuser = Transform{
 	Model("Factory Models/OSG/Structural/HVACdiffuser.osg"),
@@ -46,17 +43,14 @@ Workbench = Transform{
 	Model("Factory Models/OSG/Workbench/Work Bench.osg"),
 }
 
-Beam = Transform{
-	Model("Factory Models/OSG/Structural/beam.osg"),
-}
+Beam = Model("Factory Models/OSG/Structural/beam.osg"),
 
-Barrel = Transform{
-	Model("Factory Models/OSG/Storage and Barrels/OilBarrels.osg"),
-}
 
-HoseReel = Transform{
-	Model("Factory Models/OSG/Tools/Hose Reel.osg"),
-}
+Barrel = Model("Factory Models/OSG/Storage and Barrels/OilBarrels.osg"),
+
+
+HoseReel = Model("Factory Models/OSG/Tools/Hose Reel.osg"),
+
 
 FireExtenguisher = Transform{
 	Model("Factory Models/OSG/Tools/Fire_extinguisher.osg"),
