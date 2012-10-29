@@ -25,7 +25,7 @@ roller = Model("Factory Models/OSG/Assembly Line/Rollers.osg")
 
 roller2 = Transform{
 	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
-	Model("Factory Models/OSG/Assembly Line/Rollers.osg"),
+	roller
 }
 
 Pallet = Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg")
