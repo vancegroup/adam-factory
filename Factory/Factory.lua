@@ -3,10 +3,6 @@ AddAppDirectory()
 
 runfile "forklift_function.lua"
 
-factory = Transform{
-	position = {0, 0, 0},
-}
-
 room = Transform{
 	position = {-10, 0, 5},
 	scale = 1.65,
@@ -28,48 +24,43 @@ roller2 = Transform{
 
 Pallet = Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg")
 
-
 HVAC = Model("Factory Models/OSG/Structural/HVAC48Tube.osg"),
-
 
 Diffuser = Transform{
 	Model("Factory Models/OSG/Structural/HVACdiffuser.osg"),
 }
 
-Workbench = Transform{
-	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
-	Model("Factory Models/OSG/Workbench/Work Bench.osg"),
+Beam = Group{
+	Model("Factory Models/OSG/Structural/beam.osg"),
+	Transform{
+		position = {0, 1.5, .245},
+		Model("Factory Models/OSG/Tools/Fire_extinguisher.osg"),
+	}
 }
-
-Beam = Model("Factory Models/OSG/Structural/beam.osg"),
-
 
 Barrel = Model("Factory Models/OSG/Storage and Barrels/OilBarrels.osg"),
 
-
 HoseReel = Model("Factory Models/OSG/Tools/Hose Reel.osg"),
 
+Workbench = Transform{
+	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
+	Model("Factory Models/OSG/Workbench/Work Bench.osg"),
+	Transform{
+		Model("Factory Models/OSG/Tools/wrenches.osg"),
+		position = {-1, .875, 0},
+	},
 
-FireExtenguisher = Transform{
-	Model("Factory Models/OSG/Tools/Fire_extinguisher.osg"),
-	position = {0, 1.5, .245},
-}
+	Transform{
+		position = {-1, 0, 0},
+		orientation = AngleAxis(Degrees(180), Axis{0, 1, 0}),
+		Model("Factory Models/OSG/Workbench/Industrial Chair.osg"),
+	},
 
-Wrenches = Transform{
-	Model("Factory Models/OSG/Tools/wrenches.osg"),
-	position = {-1, .875, 0},
-}
-
-Chair = Transform{
-	position = {-1, 0, 0},
-	orientation = AngleAxis(Degrees(180), Axis{0, 1, 0}),
-	Model("Factory Models/OSG/Workbench/Industrial Chair.osg"),
-}
-
-Computer = Transform{
-	position = {0, 0, -1.5},
-	orientation = AngleAxis(Degrees(0), Axis{0, 1, 0}),
-	Model("Factory Models/OSG/Machines/Computer.osg"),
+	Transform{
+		position = {0, 0, -1.5},
+		orientation = AngleAxis(Degrees(0), Axis{0, 1, 0}),
+		Model("Factory Models/OSG/Machines/Computer.osg"),
+	},
 }
 
 rollerGroup = Group{
@@ -268,6 +259,8 @@ DiffuserGroup = Group{
 		Diffuser,
 	},
 }
+
+
 
 WorkbenchGroup = Group{
 	Transform{
@@ -506,54 +499,55 @@ Ladder = Transform{
 	Model("Factory Models/OSG/Structural/Ladder.osg"),
 }
 
-factory:addChild(room)
-factory:addChild(milling)
-factory:addChild(Lathe)
-factory:addChild(robot)
-factory:addChild(robot2)
-factory:addChild(rollerGroup)
-factory:addChild(rollerGroup2)
-factory:addChild(palletGroup)
-factory:addChild(HVACGroup)
-factory:addChild(DiffuserGroup)
-factory:addChild(WorkbenchGroup)
-factory:addChild(BeamGroup)
-factory:addChild(BarrelGroup)
-factory:addChild(HoseReelGroup)
-factory:addChild(StorageBinBlue)
-factory:addChild(StorageBinRed)
-factory:addChild(StorageBinYellow)
---factory:addChild(StorageBinGreen)
-factory:addChild(room)
-factory:addChild(Compressor)
-factory:addChild(ToolBox)
-factory:addChild(Welder)
-factory:addChild(DrillPress)
-factory:addChild(BandSaw)
-factory:addChild(RP)
-factory:addChild(MetalBender)
---factory:addChild(WaterJet) 
-factory:addChild(ShopCart)
-factory:addChild(OpenCart)
-factory:addChild(Ladder)
-factory:addChild(GarageDoor1)
-factory:addChild(GarageDoor2)
-factory:addChild(GarageDoor3)
-factory:addChild(GarageDoor4)
-factory:addChild(packaging)
---factory:addChild(ForkliftPath)
-factory:addChild(Ladder)
-Beam:addChild(FireExtenguisher)
-Workbench:addChild(Wrenches)
-Workbench:addChild(Chair)
-Workbench:addChild(Computer)
-forkliftmatrix = osg.MatrixTransform()
-
 forklift = Transform {
 	position = {8, 0, 1},
 	Model("Factory Models/OSG/Shop Carts and Fort Lifts/Forklift.osg"),
 }
-forkliftmatrix:addChild(forklift)
-factory:addChild(forkliftmatrix)
+
+forkliftmatrix = MatrixTransform{
+	forklift
+}
+
+factory = Transform{
+	position = {0, 0, 0},
+	room,
+	milling,
+	Lathe,
+	robot,
+	robot2,
+	rollerGroup,
+	rollerGroup2,
+	palletGroup,
+	HVACGroup,
+	DiffuserGroup,
+	WorkbenchGroup,
+	BeamGroup,
+	BarrelGroup,
+	HoseReelGroup,
+	StorageBinBlue,
+	StorageBinRed,
+	StorageBinYellow,
+	-- StorageBinGreen,
+	room,
+	Compressor,
+	ToolBox,
+	Welder,
+	DrillPress,
+	BandSaw,
+	RP,
+	MetalBender,
+	-- WaterJet,
+	ShopCart,
+	OpenCart,
+	Ladder,
+	GarageDoor1,
+	GarageDoor2,
+	GarageDoor3,
+	GarageDoor4,
+	packaging,
+	-- ForkliftPath,
+	Ladder,
+	forkliftmatrix,
+}
 
 return factory
