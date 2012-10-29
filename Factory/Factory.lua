@@ -464,27 +464,30 @@ OpenCart = Transform{
 	Model("Factory Models/OSG/Shop Carts and Fort Lifts/OpenCart.osg"),
 }
 
+local IndustrialDoor = Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg")
+
 GarageDoor1 = Transform{
 	position = {-10, 0, -12.5},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg"),
+	IndustrialDoor,
 }
 
 GarageDoor2 = Transform{
 	position = {-10, 0, -8.5},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg"),
+	IndustrialDoor,
 }
 
 GarageDoor3 = Transform{
 	position = {16.5, 0, -16},
 	orientation = AngleAxis(Degrees(180), Axis{0, 1, 0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg"),
+	IndustrialDoor,
 }
+
 GarageDoor4 = Transform{
 	position = {16.5, 0, -12},
 	orientation = AngleAxis(Degrees(180), Axis{0, 1, 0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg"),
+	IndustrialDoor,
 }
 
 ForkliftPath = Transform{
