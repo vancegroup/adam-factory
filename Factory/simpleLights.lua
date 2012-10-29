@@ -7,12 +7,12 @@ vrjLua.appendToModelSearchPath(vrjLua.findInModelSearchPath("../../models/"))
 --RelativeTo.World:addChild(robot)
 
 ss = RelativeTo.World:getOrCreateStateSet()
-RelativeTo.World:addChild(Sphere{radius=.23, position = {0,5,-5}})
-RelativeTo.World:addChild(Sphere{radius=.23, position = {3.5,2,-6}})
-RelativeTo.World:addChild(Sphere{radius=.23, position = {7,4,-8}})
-RelativeTo.World:addChild(Sphere{radius=.23, position = {11.5,3,-6}})
-RelativeTo.World:addChild(Sphere{radius=.23, position = {15,7,-9}})
-RelativeTo.World:addChild(Sphere{radius=.23, position = {19.5,2,-6}})
+RelativeTo.World:addChild(Sphere{radius = .23, position = {0, 5, -5}})
+RelativeTo.World:addChild(Sphere{radius = .23, position = {3.5, 2, -6}})
+RelativeTo.World:addChild(Sphere{radius = .23, position = {7, 4, -8}})
+RelativeTo.World:addChild(Sphere{radius = .23, position = {11.5, 3, -6}})
+RelativeTo.World:addChild(Sphere{radius = .23, position = {15, 7, -9}})
+RelativeTo.World:addChild(Sphere{radius = .23, position = {19.5, 2, -6}})
 function doLight1()
 
 	l1 = osg.Light()
@@ -33,13 +33,13 @@ function doLight1_5()
 	l3 = osg.Light()
 	l3:setLightNum(3)
 	l3:setAmbient(osg.Vec4(.2, .2, .3, 1.0))
-	
+
 	ls3 = osg.LightSource()
 	ls3:setLight(l3)
 	ls3:setLocalStateSetModes(osg.StateAttribute.Values.ON)
 
 	ss:setAssociatedModes(l3, osg.StateAttribute.Values.ON)
-	
+
 	RelativeTo.Room:addChild(
 		ls3
 	)
@@ -50,13 +50,13 @@ function doLight2()
 	l2 = osg.Light()
 	l2:setLightNum(1)
 	l2:setAmbient(osg.Vec4(.8, .8, 0.6, .50))
-	
+
 	ls2 = osg.LightSource()
 	ls2:setLight(l2)
 	ls2:setLocalStateSetModes(osg.StateAttribute.Values.ON)
 
 	ss:setAssociatedModes(l2, osg.StateAttribute.Values.ON)
-	
+
 	RelativeTo.Room:addChild(
 		ls2
 	)
