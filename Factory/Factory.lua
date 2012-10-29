@@ -362,15 +362,17 @@ HoseReelGroup = Group{
 	},
 }
 
+local robotModel = Model("Factory Models/OSG/Machines/Robot.osg")
+
 robot = Transform {
 	position = {-3, 0, -12},
-	Model("Factory Models/OSG/Machines/Robot.osg"),
+	robotModel,
 }
 
 robot2 = Transform {
 	position = {-3, 0, -15},
 	--orientation = AngleAxis(Degrees(180), Axis{0.0,1.0,0.0}),
-	Model("Factory Models/OSG/Machines/Robot.osg"),
+	robotModel,
 }
 
 StorageBinBlue = Transform{
