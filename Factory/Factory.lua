@@ -22,7 +22,7 @@ roller2 = Transform{
 	roller
 }
 
-Pallet = Model("Factory Models/OSG/Shop Carts and Fort Lifts/pallet.osg")
+Pallet = Model("Factory Models/OSG/Shop Carts and Fork Lifts/pallet.osg")
 
 HVAC = Model("Factory Models/OSG/Structural/HVAC48Tube.osg")
 
@@ -446,16 +446,16 @@ WaterJet = Transform{
 ShopCart = Transform{
 	position = {2.6, 0, -3.5},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/ShopCart.osg"),
+	Model("Factory Models/OSG/Shop Carts and Fork Lifts/ShopCart.osg"),
 }
 
 OpenCart = Transform{
 	position = {-2, 0, 0},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/OpenCart.osg"),
+	Model("Factory Models/OSG/Shop Carts and Fork Lifts/OpenCart.osg"),
 }
 
-local IndustrialDoor = Model("Factory Models/OSG/Shop Carts and Fort Lifts/IndustrialDoor.osg")
+local IndustrialDoor = Model("Factory Models/OSG/Shop Carts and Fork Lifts/IndustrialDoor.osg")
 
 GarageDoor1 = Transform{
 	position = {-10, 0, -12.5},
@@ -484,7 +484,7 @@ GarageDoor4 = Transform{
 ForkliftPath = Transform{
 	position = {-8, .01, 5},
 	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/Path.osg"),
+	Model("Factory Models/OSG/Shop Carts and Fork Lifts/Path.osg"),
 }
 
 packaging = Transform{
@@ -501,7 +501,7 @@ Ladder = Transform{
 
 forklift = Transform {
 	position = {8, 0, 1},
-	Model("Factory Models/OSG/Shop Carts and Fort Lifts/Forklift.osg"),
+	Model("Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg"),
 }
 
 forkliftmatrix = MatrixTransform{
