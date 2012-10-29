@@ -1,4 +1,5 @@
-require("getScriptFilename")
-vrjLua.appendToModelSearchPath(getScriptFilename())
-dofile(vrjLua.findInModelSearchPath([[simpleLights.lua]]))
-RelativeTo.World:addChild(dofile(vrjLua.findInModelSearchPath("Factory.lua")))
+require "AddAppDirectory"
+AddAppDirectory()
+
+runfile "simpleLights.lua"
+RelativeTo.World:addChild(runfile "Factory.lua")

@@ -1,4 +1,4 @@
-require("getScriptFilename")
-vrjLua.appendToModelSearchPath(getScriptFilename())
+require "AddAppDirectory"
+AddAppDirectory()
 
-SpartaAppDelegate:replaceRoomModel(dofile(vrjLua.findInModelSearchPath("Factory.lua")))
+SpartaAppDelegate:replaceRoomModel(runfile "Factory.lua")
