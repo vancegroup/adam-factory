@@ -281,12 +281,12 @@ WorkbenchGroup = Group{
 		Workbench,
 	},
 	Transform{
-		position = {11.2, 0, -13},
+		position = {11.1, 0, -13},
 		orientation = AngleAxis(Degrees(180), Axis{0, 1, 0}),
 		Workbench,
 	},
 	Transform{
-		position = {11.2, 0, -9},
+		position = {11.1, 0, -9},
 		orientation = AngleAxis(Degrees(180), Axis{0, 1, 0}),
 		Workbench,
 	},
