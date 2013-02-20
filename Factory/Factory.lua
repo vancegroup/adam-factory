@@ -500,8 +500,8 @@ Ladder = Transform{
 }
 
 forklift = Transform {
-	position = {8, 0, 1},
-	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
+	position = {7.5, 0, .5},
+	orientation = AngleAxis(Degrees(0), Axis{0, 1, 0}),
 	Model("Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg"),
 }
 
