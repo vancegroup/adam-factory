@@ -6,7 +6,7 @@ dofile(vrjLua.findInModelSearchPath("forklift_function.lua"))
 
 
 factory = Transform{
-	position = {0,0,0},
+	position = {0,.25,0},
 }
 room = Transform{
 	position = {-10,0,5},
