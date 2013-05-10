@@ -1,5 +1,5 @@
 require "AddAppDirectory"
 AddAppDirectory()
 
-runfile "simpleLights.lua"
+runfile "factorylighting.lua"
 RelativeTo.World:addChild(runfile "Factory.lua")
