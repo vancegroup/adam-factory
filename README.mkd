@@ -1,4 +1,4 @@
-SPARTA Factory Model
+The "Adam's Factory"
 ====================
 
 This detailed factory environment, sometimes known as the "Adam Factory" after the student who put it together, @adamc17, is rich for use in an immersive environment.
