@@ -3,6 +3,9 @@ AddAppDirectory()
 
 runfile "forklift_function.lua"
 
+--[[ Action for switching navigation in METaL ]]
+runfile [[Navigation.lua]]
+
 room = Transform{
 	position = {-10, 0, 5},
 	scale = 1.65,
