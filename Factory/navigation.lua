@@ -44,8 +44,8 @@ walking_nav = function(dt)
 end
 Actions.addFrameAction(walking_nav)
 
---[[Function for flying in scene]]
-fly_nav = function(dt)
+--[[Function for controlling the forklift]]
+forklift_nav = function(dt)
 	local wand = gadget.PositionInterface('VJWand')
 	local device = gadget.DigitalInterface("VJButton0")
 	local dt = dt
@@ -57,20 +57,23 @@ fly_nav = function(dt)
 		while device.pressed do
 			dt = Actions.waitForRedraw()
 			-- Post-mult here does our movement in the room frame before the rest of the transform
-			RelativeTo.World:postMult(osg.Matrixd.translate(-wand.forwardVector*rate*dt))
+			RelativeTo.World:postMult(osg.Matrixd.translate(-wand.forwardVector:x()*rate*dt,0,-wand.forwardVector:z()*rate*dt))
 		end
 	end
+
 end
+Actions.addFrameAction(forklift_nav)
 
 --[[Functions for switching between navigation styles]]
-function switchNavigationFromWalkingToFlying()
+function switchNavigationFromWalkingToForklift()
 	Actions.removeFrameAction(walking_nav2)
-	fly_nav2 = Actions.addFrameAction(fly_nav)
+	RelativeTo.World:preMult(osg.Matrixd.translate(0, trackhead:y()+CabHeight, 0))
+	fork_nav2 = Actions.addFrameAction(fork_nav)
 end
 
-function switchNavigationFromFlyingToWalking()
-	Actions.removeFrameAction(fly_nav2)
-	RelativeTo.World:preMult(osg.Matrixd.translate(0, track:y()-height, 0))
+function switchNavigationFromForkliftToWalking()
+	Actions.removeFrameAction(fork_nav2)
+	RelativeTo.World:preMult(osg.Matrixd.translate(0, trackhead:y()-CabHeight, 0))
 	walking_nav2 = Actions.addFrameAction(walking_nav)
 end
 
@@ -81,13 +84,14 @@ Actions.addFrameAction(
 		while true do
 			repeat
 				Actions.waitForRedraw()
-				height = track:y()
+				--enter how high up the cab to the forklift is here
+				CabHeight = 1
 			until toggle_button.justPressed
-				switchNavigationFromWalkingToFlying()
+				switchNavigationFromWalkingToForklift()
 			repeat
 				Actions.waitForRedraw()
 			until toggle_button.justPressed
-				switchNavigationFromFlyingToWalking()
+				switchNavigationFromForkliftToWalking
 		end
 	end
 )
