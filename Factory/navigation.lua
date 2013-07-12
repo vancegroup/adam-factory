@@ -152,3 +152,45 @@ Actions.addFrameAction(
 	
 	end
 )
+
+
+
+
+
+
+
+
+--Cart info
+local ForkliftInfo = { 
+    arbitraryCenterInRoom = Vec(2, 0, 0.7); 
+    tracker = gadget.PositionInterface("ForkliftDirectionTracker"); 
+    handle = gadget.AnalogInterface("ForkliftHandleInput"); 
+    cornersInForkliftSpace = returnCorners();  
+    --Adjust this to change the positioning of the forklift relative to the wand 
+    wand_forklift_offset = Vec(-0.2, 0.1, 0); 
+}
+
+-- Update forkliftxform based on the wand
+Actions.addFrameAction(
+	function()
+		local mat
+		while true do
+			mat = ForkliftInfo.tracker.matrix
+			local forklift_angle = ForkliftInfo.getAngle()
+			--print("Forklift angle: " .. forklift_angle)
+			local quat = osg.Quat(forklift_angle, Vec(0,1,0))
+			mat:setRotate(quat)
+			mat:setTrans(mat:getTrans():x(), 0, mat:getTrans():z())
+			forkliftxform:setMatrix(mat)
+			Actions.waitForRedraw()
+		end
+	end
+)
+
+
+forklift_product_group = Transform{
+	position = {ForkliftInfo.wand_forklift_offset:x(), ForkliftInfo.wand_forklift_offset:y(), ForkliftInfo.wand_forklift_offset:z()},
+	Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
+}
+
+forkliftxform:addChild(forklift_product_group)
