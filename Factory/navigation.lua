@@ -44,8 +44,8 @@ walking_nav = function(dt)
 end
 Actions.addFrameAction(walking_nav)
 
---[[Function for controlling the forklift]]
-forklift_nav = function(dt)
+--[[Function for driving forklift in scene]]
+drive_nav = function(dt)
 	local wand = gadget.PositionInterface('VJWand')
 	local device = gadget.DigitalInterface("VJButton0")
 	local dt = dt
@@ -62,36 +62,39 @@ forklift_nav = function(dt)
 	end
 
 end
-Actions.addFrameAction(forklift_nav)
+Actions.addFrameAction(drive_nav)
 
 --[[Functions for switching between navigation styles]]
-function switchNavigationFromWalkingToForklift()
+--*******cabHeight needs to be adjusted*********
+cabHeight = .25
+
+function switchNavigationFromWalkingToDriving()
 	Actions.removeFrameAction(walking_nav2)
-	RelativeTo.World:preMult(osg.Matrixd.translate(0, trackhead:y()+CabHeight, 0))
-	fork_nav2 = Actions.addFrameAction(fork_nav)
+	RelativeTo.World:preMult(osg.Matrixd.translate(0, -cabHeight, 0))
+	drive_nav2 = Actions.addFrameAction(drive_nav)
 end
 
-function switchNavigationFromForkliftToWalking()
-	Actions.removeFrameAction(fork_nav2)
-	RelativeTo.World:preMult(osg.Matrixd.translate(0, trackhead:y()-CabHeight, 0))
+function switchNavigationFromDrivingToWalking()
+	Actions.removeFrameAction(drive_nav2)
+	RelativeTo.World:preMult(osg.Matrixd.translate(0, cabHeight, 0))
 	walking_nav2 = Actions.addFrameAction(walking_nav)
 end
 
 --[[FrameAction for using the wii-mote to switch between navigation styles]]
 Actions.addFrameAction(
 	function()
-		local toggle_button = gadget.DigitalInterface("WMButtonPlus")
+		local toggle_button = gadget.DigitalInterface("VJButton2")
 		while true do
 			repeat
 				Actions.waitForRedraw()
-				--enter how high up the cab to the forklift is here
-				CabHeight = 1
 			until toggle_button.justPressed
-				switchNavigationFromWalkingToForklift()
+				switchNavigationFromWalkingToDriving()
+				RelativeTo.World:removeChild(forklift)
 			repeat
 				Actions.waitForRedraw()
 			until toggle_button.justPressed
-				switchNavigationFromForkliftToWalking
+				switchNavigationFromDrivingToWalking()
+				RelativeTo.World:addChild(forklift)
 		end
 	end
 )
@@ -112,6 +115,8 @@ Actions.addFrameAction(
 		local wand = gadget.PositionInterface("VJWand")
 		local device = gadget.DigitalInterface("WMButtonLeft")
 		local device2 = gadget.DigitalInterface("WMButtonRight")
+		-- local device = gadget.DigitalInterface("VJButton2")
+		-- local device2 = gadget.DigitalInterface("VJButton2")
 		local dt = dt
 		local rate = .5
 		while true do
