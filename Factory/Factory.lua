@@ -1,8 +1,6 @@
 require "AddAppDirectory"
 AddAppDirectory()
 
-runfile "forklift_function.lua"
-
 --[[ Action for switching navigation in METaL ]]
 runfile [[Navigation.lua]]
 
@@ -484,12 +482,6 @@ GarageDoor4 = Transform{
 	IndustrialDoor,
 }
 
-ForkliftPath = Transform{
-	position = {-8, .01, 5},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fork Lifts/Path.osg"),
-}
-
 packaging = Transform{
 	position = {14.18, .001, 7},
 	orientation = AngleAxis(Degrees(90), Axis{0, 1, 0}),
@@ -549,7 +541,6 @@ factory = Transform{
 	GarageDoor3,
 	GarageDoor4,
 	packaging,
-	-- ForkliftPath,
 	Ladder,
 	forkliftmatrix,
 }
