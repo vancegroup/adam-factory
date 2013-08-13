@@ -157,40 +157,36 @@ Actions.addFrameAction(
 local cartxform = osg.MatrixTransform()
 RelativeTo.Room:addChild(cartxform)
 
--- Update cartxform based on the wand
--- returnCorners = function()
-	-- return {
-		-- Vec(0.25, 0, 0.1); 			--back
-		-- Vec(0.25, 0, -0.9); 		--front
-		-- Vec(-0.25, 0, -0.9); 		--front
-		-- Vec(-0.25, 0, 0.1); 		--back
-	-- }
--- end
 
+--[[from shopping cart code]]
 
 local CartInfo = {
-	-- arbitraryCenterInRoom = Vec(2, 0, 0.7);
-	tracker = gadget.PositionInterface("CartDirectionTracker");
+	arbitraryCenterInRoom = Vec(2, 0, 0.7);
+	tracker = gadget.PositionInterface("VJWand");
 	handle = gadget.AnalogInterface("CartHandleInput");
 	-- cornersInCartSpace = returnCorners();
 	--TODO: this may need to be adjusted between Metal vs. C6
 	--Adjust this to change the positioning of the cart relative to the wand
-	wand_cart_offset = Vec(-0.2, 0.1, 0);
+	wand_cart_offset = Vec( -.25, -.1, 0);
 }
-
-CartInfo.getAngle = function()
-	local fwd = CartInfo.getForwardVector()
-	--90 degrees = 1.57079633 in radians
-	--TODO: check this, why does this method by default return "90" degrees
-	--return in radians
-	return math.atan2(-fwd:z(), fwd:x()) - 1.57079633
-end
 
 CartInfo.getForwardVector = function()
 	local vec = Vec(CartInfo.tracker.forwardVector:x(), 0, CartInfo.tracker.forwardVector:z())
 	vec:normalize()
 	return vec
 end
+
+CartInfo.getAngle = function()
+	local fwd = CartInfo.getForwardVector()
+	--90 degrees = 1.57079633 in radians
+	--TODO: check this, why does this method by default return "90" degrees
+	--return in radians
+	return math.atan2(-fwd:z(), fwd:x()) - 3.14159266
+end
+
+
+
+
 
 Actions.addFrameAction(
 	function()
