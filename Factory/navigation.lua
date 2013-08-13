@@ -187,6 +187,7 @@ end
 
 
 
+-- Update cartxform based on the wand
 
 Actions.addFrameAction(
 	function()
@@ -205,9 +206,11 @@ Actions.addFrameAction(
 )
 
 
-cart_product_group = Transform{
-	position = {CartInfo.wand_cart_offset:x(), CartInfo.wand_cart_offset:y(), CartInfo.wand_cart_offset:z()},
-	Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
+cart_product_group = Group{
+	Transform{
+		position = {CartInfo.wand_cart_offset:x(), CartInfo.wand_cart_offset:y(), CartInfo.wand_cart_offset:z()},
+		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
+	}
 }
 
 cartxform:addChild(cart_product_group)
