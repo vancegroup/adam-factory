@@ -174,9 +174,6 @@ end
 
 ForkliftInfo.getAngle = function()
 	local fwd = ForkliftInfo.getForwardVector()
-	--90 degrees = 1.57079633 in radians
-	--TODO: check this, why does this method by default return "90" degrees
-	--return in radians
 	return math.atan2(-fwd:z(), fwd:x()) - 3.14159266
 end
 
