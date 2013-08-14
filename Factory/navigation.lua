@@ -80,25 +80,6 @@ function switchNavigationFromDrivingToWalking()
 	walking_nav2 = Actions.addFrameAction(walking_nav)
 end
 
---[[FrameAction for using the wii-mote to switch between navigation styles]]
-Actions.addFrameAction(
-	function()
-		local toggle_button = gadget.DigitalInterface("VJButton2")
-		while true do
-			repeat
-				Actions.waitForRedraw()
-			until toggle_button.justPressed
-				switchNavigationFromWalkingToDriving()
-				RelativeTo.World:removeChild(forklift)
-			repeat
-				Actions.waitForRedraw()
-			until toggle_button.justPressed
-				switchNavigationFromDrivingToWalking()
-				RelativeTo.World:addChild(forklift)
-		end
-	end
-)
-
 --[[Update the position of the tracked head]]
 local head = gadget.PositionInterface("VJHead")
 updateposTrack = function()
@@ -149,7 +130,6 @@ Actions.addFrameAction(
 				RelativeTo.World:preMult(deltaMatrix)
 			end
 		end
-	
 	end
 )
 
@@ -158,7 +138,6 @@ local forkliftxform = osg.MatrixTransform()
 RelativeTo.Room:addChild(forkliftxform)
 
 local ForkliftInfo = {
-	arbitraryCenterInRoom = Vec(2, 0, 0.7);
 	tracker = gadget.PositionInterface("VJWand");
 	-- cornersInCartSpace = returnCorners();
 	--TODO: this may need to be adjusted between Metal vs. C6
@@ -177,26 +156,43 @@ ForkliftInfo.getAngle = function()
 	return math.atan2(-fwd:z(), fwd:x()) - 3.14159266
 end
 
+drive = function()
+	local mat
+	while true do
+		mat = ForkliftInfo.tracker.matrix
+		local forklift_angle = ForkliftInfo.getAngle()
+		local quat = osg.Quat(forklift_angle, Vec(0,1,0))
+		mat:setRotate(quat)
+		mat:setTrans(mat:getTrans():x(), 0, mat:getTrans():z())
+		forkliftxform:setMatrix(mat)
+		Actions.waitForRedraw()
+	end
+end
+
+forklift_product_group = Transform{
+	position = {ForkliftInfo.wand_forklift_offset:x(), ForkliftInfo.wand_forklift_offset:y(), ForkliftInfo.wand_forklift_offset:z()},
+	Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
+}
+	
+forkliftxform:addChild(forklift_product_group)
+
+--[[FrameAction for using the wii-mote to switch between navigation styles]]
 Actions.addFrameAction(
 	function()
-		local mat
+		local toggle_button = gadget.DigitalInterface("VJButton2")
 		while true do
-			mat = ForkliftInfo.tracker.matrix
-			local forklift_angle = ForkliftInfo.getAngle()
-			local quat = osg.Quat(forklift_angle, Vec(0,1,0))
-			mat:setRotate(quat)
-			mat:setTrans(mat:getTrans():x(), 0, mat:getTrans():z())
-			forkliftxform:setMatrix(mat)
-			Actions.waitForRedraw()
+			repeat
+				Actions.waitForRedraw()
+			until toggle_button.justPressed
+				switchNavigationFromWalkingToDriving()
+				RelativeTo.World:removeChild(forklift)
+				Actions.addFrameAction(drive)
+			repeat
+				Actions.waitForRedraw()
+			until toggle_button.justPressed
+				switchNavigationFromDrivingToWalking()
+				RelativeTo.World:addChild(forklift)
+				Actions.removeFrameAction(drive)
 		end
 	end
 )
-
-forklift_product_group = Group{
-	Transform{
-		position = {ForkliftInfo.wand_forklift_offset:x(), ForkliftInfo.wand_forklift_offset:y(), ForkliftInfo.wand_forklift_offset:z()},
-		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
-	}
-}
-
-forkliftxform:addChild(forklift_product_group)
