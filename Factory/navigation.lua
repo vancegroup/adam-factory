@@ -160,7 +160,6 @@ RelativeTo.Room:addChild(forkliftxform)
 local ForkliftInfo = {
 	arbitraryCenterInRoom = Vec(2, 0, 0.7);
 	tracker = gadget.PositionInterface("VJWand");
-	handle = gadget.AnalogInterface("CartHandleInput");
 	-- cornersInCartSpace = returnCorners();
 	--TODO: this may need to be adjusted between Metal vs. C6
 	--Adjust this to change the positioning of the cart relative to the wand
