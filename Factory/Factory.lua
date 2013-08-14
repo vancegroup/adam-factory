@@ -261,8 +261,6 @@ DiffuserGroup = Group{
 	},
 }
 
-
-
 WorkbenchGroup = Group{
 	Transform{
 		position = {1, 0, -10},
@@ -384,6 +382,7 @@ StorageBinYellow = Transform{
 	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
 	Model("Factory Models/OSG/Storage and Barrels/Storage Bin2Yellow.osg"),
 }
+
 StorageBinGreen = Transform{
 	position = {-2.7, 0, -15},
 	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
@@ -500,7 +499,6 @@ forklift = Transform {
 	Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
 }
 RelativeTo.World:addChild(forklift)
-
 
 factory = Transform{
 	position = {0, 0, 0},
