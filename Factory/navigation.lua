@@ -14,7 +14,7 @@ local transformDirectionRoomToWorld = function(v)
 	return getRoomToWorld():preMult(osg.Vec4d(v,0))
 end
 
---Update the position of the tracked wii-mote
+--[[Update the position of the tracked wii-mote]]
 local device = gadget.PositionInterface("VJWand")
 updatepositionTrack = function()
 	while true do
@@ -153,64 +153,54 @@ Actions.addFrameAction(
 	end
 )
 
+--[[Update forkliftxform based on the wand]]
+local forkliftxform = osg.MatrixTransform()
+RelativeTo.Room:addChild(forkliftxform)
 
-local cartxform = osg.MatrixTransform()
-RelativeTo.Room:addChild(cartxform)
-
-
---[[from shopping cart code]]
-
-local CartInfo = {
+local ForkliftInfo = {
 	arbitraryCenterInRoom = Vec(2, 0, 0.7);
 	tracker = gadget.PositionInterface("VJWand");
 	handle = gadget.AnalogInterface("CartHandleInput");
 	-- cornersInCartSpace = returnCorners();
 	--TODO: this may need to be adjusted between Metal vs. C6
 	--Adjust this to change the positioning of the cart relative to the wand
-	wand_cart_offset = Vec( -.25, -.1, 0);
+	wand_forklift_offset = Vec( -.25, -.1, 0);
 }
 
-CartInfo.getForwardVector = function()
-	local vec = Vec(CartInfo.tracker.forwardVector:x(), 0, CartInfo.tracker.forwardVector:z())
+ForkliftInfo.getForwardVector = function()
+	local vec = Vec(ForkliftInfo.tracker.forwardVector:x(), 0, ForkliftInfo.tracker.forwardVector:z())
 	vec:normalize()
 	return vec
 end
 
-CartInfo.getAngle = function()
-	local fwd = CartInfo.getForwardVector()
+ForkliftInfo.getAngle = function()
+	local fwd = ForkliftInfo.getForwardVector()
 	--90 degrees = 1.57079633 in radians
 	--TODO: check this, why does this method by default return "90" degrees
 	--return in radians
 	return math.atan2(-fwd:z(), fwd:x()) - 3.14159266
 end
 
-
-
-
--- Update cartxform based on the wand
-
 Actions.addFrameAction(
 	function()
 		local mat
 		while true do
-			mat = CartInfo.tracker.matrix
-			local cart_angle = CartInfo.getAngle()
-			--print("Cart angle: " .. cart_angle)
-			local quat = osg.Quat(cart_angle, Vec(0,1,0))
+			mat = ForkliftInfo.tracker.matrix
+			local forklift_angle = ForkliftInfo.getAngle()
+			local quat = osg.Quat(forklift_angle, Vec(0,1,0))
 			mat:setRotate(quat)
 			mat:setTrans(mat:getTrans():x(), 0, mat:getTrans():z())
-			cartxform:setMatrix(mat)
+			forkliftxform:setMatrix(mat)
 			Actions.waitForRedraw()
 		end
 	end
 )
 
-
-cart_product_group = Group{
+forklift_product_group = Group{
 	Transform{
-		position = {CartInfo.wand_cart_offset:x(), CartInfo.wand_cart_offset:y(), CartInfo.wand_cart_offset:z()},
+		position = {ForkliftInfo.wand_forklift_offset:x(), ForkliftInfo.wand_forklift_offset:y(), ForkliftInfo.wand_forklift_offset:z()},
 		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
 	}
 }
 
-cartxform:addChild(cart_product_group)
+forkliftxform:addChild(forklift_product_group)
