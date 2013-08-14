@@ -66,7 +66,7 @@ Actions.addFrameAction(drive_nav)
 
 --[[Functions for switching between navigation styles]]
 --*******cabHeight needs to be adjusted*********
-cabHeight = .25
+cabHeight = 0
 
 function switchNavigationFromWalkingToDriving()
 	Actions.removeFrameAction(walking_nav2)
