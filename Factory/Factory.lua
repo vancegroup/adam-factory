@@ -6,6 +6,9 @@ runfile [[Navigation.lua]]
 
 --[[ Action for adding forklift driving ]]
 runfile [[forklift.lua]]
+
+
+--[[ add models to scene ]]
 room = Transform{
 	position = {-10, 0, 5},
 	scale = 1.65,
