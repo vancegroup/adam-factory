@@ -1,9 +1,6 @@
 require "AddAppDirectory"
 AddAppDirectory()
 
---[[ Action for switching navigation in METaL ]]
-runfile [[Navigation.lua]]
-
 --[[ Action for adding forklift driving ]]
 runfile [[forklift.lua]]
 
