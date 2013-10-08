@@ -10,7 +10,7 @@ RelativeTo.World:addChild(forklift)
 Actions.addFrameAction(
 	function()
 		local wand = gadget.PositionInterface('VJWand')
-		local device = gadget.DigitalInterface("WMButtonDown")
+		local device = gadget.DigitalInterface("VJButton2")
 		while true do
 			repeat
 				Actions.waitForRedraw()
