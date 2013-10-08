@@ -1,12 +1,11 @@
 require("Actions")
 
-local forklift = Transform{
+local forklift = Transform {
 	position = {7.5, 0, .5},
-	orientation = AngleAxis(Degrees(0), Axis{0, 1, 0}),
-	Model([[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]),
+	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
+	Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
 }
-
-RelativeTo.World:addchild(forklift)
+RelativeTo.World:addChild(forklift)
 
 Actions.addFrameAction(
 	function()

@@ -495,12 +495,6 @@ Ladder = Transform{
 	Model("Factory Models/OSG/Structural/Ladder.osg"),
 }
 
-forklift = Transform {
-	position = {7.5, 0, .5},
-	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
-	Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
-}
-RelativeTo.World:addChild(forklift)
 
 factory = Transform{
 	position = {0, 0, 0},
