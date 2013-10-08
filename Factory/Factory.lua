@@ -495,7 +495,6 @@ Ladder = Transform{
 	Model("Factory Models/OSG/Structural/Ladder.osg"),
 }
 
-
 factory = Transform{
 	position = {0, 0, 0},
 	room,
