@@ -1,6 +1,20 @@
 require "AddAppDirectory"
 AddAppDirectory()
 
+--[[ Add navigation to the scene ]]
+require("Actions")
+require("getScriptFilename")
+vrjLua.appendToModelSearchPath(getScriptFilename())
+dofile(vrjLua.findInModelSearchPath([[navigation.lua]]))
+
+myNav = FlyOrWalkNavigation{
+	start = "walking",
+	switchButton = gadget.DigitalInterface("WMButtonPlus"),
+	initiateRotationButton1 = gadget.DigitalInterface("WMButtonLeft"),
+	initiateRotationButton2 = gadget.DigitalInterface("WMButtonRight"),
+}
+
+-- [[ Add forklift animation to the scene ]]
 runfile "forklift_function.lua"
 
 room = Transform{
