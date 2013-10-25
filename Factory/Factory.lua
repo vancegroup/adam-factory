@@ -17,6 +17,8 @@ myNav = FlyOrWalkNavigation{
 -- [[ Add forklift animation to the scene ]]
 runfile "forklift_function.lua"
 
+
+--[[ add models to scene ]]
 room = Transform{
 	position = {-10, 0, 5},
 	scale = 1.65,
@@ -274,8 +276,6 @@ DiffuserGroup = Group{
 	},
 }
 
-
-
 WorkbenchGroup = Group{
 	Transform{
 		position = {1, 0, -10},
@@ -397,6 +397,7 @@ StorageBinYellow = Transform{
 	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
 	Model("Factory Models/OSG/Storage and Barrels/Storage Bin2Yellow.osg"),
 }
+
 StorageBinGreen = Transform{
 	position = {-2.7, 0, -15},
 	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
@@ -495,12 +496,6 @@ GarageDoor4 = Transform{
 	IndustrialDoor,
 }
 
-ForkliftPath = Transform{
-	position = {-8, .01, 5},
-	--orientation = AngleAxis(Degrees(-90), Axis{0,1,0}),
-	Model("Factory Models/OSG/Shop Carts and Fork Lifts/Path.osg"),
-}
-
 packaging = Transform{
 	position = {14.18, .001, 7},
 	orientation = AngleAxis(Degrees(90), Axis{0, 1, 0}),
@@ -511,16 +506,6 @@ Ladder = Transform{
 	position = {12, .5, -19},
 	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
 	Model("Factory Models/OSG/Structural/Ladder.osg"),
-}
-
-forklift = Transform {
-	position = {7.5, 0, .5},
-	orientation = AngleAxis(Degrees(0), Axis{0, 1, 0}),
-	Model("Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg"),
-}
-
-forkliftmatrix = MatrixTransform{
-	forklift
 }
 
 factory = Transform{
@@ -560,9 +545,8 @@ factory = Transform{
 	GarageDoor3,
 	GarageDoor4,
 	packaging,
-	-- ForkliftPath,
 	Ladder,
-	forkliftmatrix,
+	-- forklift,
 }
 
 return factory

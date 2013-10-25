@@ -6,6 +6,7 @@ vrjLua.appendToModelSearchPath(getScriptFilename())
 local device = gadget.PositionInterface("VJWand")
 
 local stateSet = RelativeTo.World:getOrCreateStateSet()
+local stateSet2 = RelativeTo.Room:getOrCreateStateSet()
 
 --Regular lighting for when lumos is not in effect
 light1 = osg.Light()
@@ -36,8 +37,10 @@ light2:setPosition(osg.Vec4(15,5,10, 1.0))
 --Set background light to always be present
 lightsource1:setLocalStateSetModes(osg.StateAttribute.Values.ON)
 stateSet:setAssociatedModes(light1, osg.StateAttribute.Values.ON)
+stateSet2:setAssociatedModes(light1, osg.StateAttribute.Values.ON)
 lightsource2:setLocalStateSetModes(osg.StateAttribute.Values.ON)
 stateSet:setAssociatedModes(light2, osg.StateAttribute.Values.ON)
+stateSet2:setAssociatedModes(light2, osg.StateAttribute.Values.ON)
 RelativeTo.World:addChild(lightsource1)
 RelativeTo.World:addChild(lightsource2)
 
