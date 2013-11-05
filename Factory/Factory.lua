@@ -15,7 +15,7 @@ myNav = FlyOrWalkNavigation{
 }
 
 -- [[ Add forklift animation to the scene ]]
-runfile "forklift_function.lua"
+runfile "forklift.lua"
 
 
 --[[ add models to scene ]]
