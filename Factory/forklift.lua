@@ -4,23 +4,20 @@ local getRoomToWorld = function()
 	return RelativeTo.World:getInverseMatrix()
 end
 
-local transformPointRoomToWorld = function(v)
-	return getRoomToWorld():preMult(v)
+local transformMatrixRoomToWorld = function(m)
+	return m * getRoomToWorld()
 end
 
-local transformMatrixRoomToWorld = function(v)
-	return getRoomToWorld():preMult(v)
+local transformMatrixWorldToRoom = function(m)
+	return m * RelativeTo.World:getMatrix()
 end
-
-local transformPointWorldToRoom = function(v)
-	return RelativeTo.World:getMatrix():preMult(v)
-end
-
 
 local forklift = MatrixTransform{
 	position = {0, 0, 0 },
-	orientation = AngleAxis(Degrees(-90), Axis{0, 1, 0}),
-	Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
+	Transform{
+		orientation = AngleAxis(Degrees(-90), Axis{0.0, 1.0, 0.0}),
+		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
+	}
 }
 RelativeTo.Room:addChild(forklift)
 
@@ -50,7 +47,7 @@ Actions.addFrameAction(
 			--remove the forklift from the world
 			RelativeTo.World:removeChild(forklift)
 			--calculate room position with respect to world
-			local room_pose = transformMatrixRoomToWorld(world_pose)
+			local room_pose = transformMatrixWorldToRoom(world_pose)
 			--	--update the position of the forklift to the room position
 			forklift.Matrix = room_pose
 			--add forklift to room
