@@ -19,26 +19,13 @@ local forklift = MatrixTransform{
 		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
 	}
 }
-RelativeTo.Room:addChild(forklift)
+RelativeTo.World:addChild(forklift)
 
 Actions.addFrameAction(
 	function()
 		local wand = gadget.PositionInterface('VJWand')
-		local device = gadget.DigitalInterface("VJButton2")
+		local device = gadget.DigitalInterface("WMButtonMinus")
 		while true do
-			repeat
-				Actions.waitForRedraw()
-			until device.justPressed
-			--get forklifts position (currently in room)
-			local room_pose = forklift.Matrix
-			--remove forlift from room
-			RelativeTo.Room:removeChild(forklift)
-			--"transform" the forklifts position with respect to the world
-			local world_pose = transformMatrixRoomToWorld(room_pose)
-			--update the position of the forklift to the world position
-			forklift.Matrix = world_pose
-			--add forklift to world
-			RelativeTo.World:addChild(forklift)
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
@@ -52,6 +39,19 @@ Actions.addFrameAction(
 			forklift.Matrix = room_pose
 			--add forklift to room
 			RelativeTo.Room:addChild(forklift)
+			repeat
+				Actions.waitForRedraw()
+			until device.justPressed
+			--get forklifts position (currently in room)
+			local room_pose = forklift.Matrix
+			--remove forlift from room
+			RelativeTo.Room:removeChild(forklift)
+			--"transform" the forklifts position with respect to the world
+			local world_pose = transformMatrixRoomToWorld(room_pose)
+			--update the position of the forklift to the world position
+			forklift.Matrix = world_pose
+			--add forklift to world
+			RelativeTo.World:addChild(forklift)
 		end
 	end
 )
