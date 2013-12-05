@@ -6,6 +6,7 @@ require("Actions")
 require("getScriptFilename")
 vrjLua.appendToModelSearchPath(getScriptFilename())
 dofile(vrjLua.findInModelSearchPath([[navigation.lua]]))
+dofile(vrjLua.findInModelSearchPath([[helpMenu.lua]]))
 
 myNav = FlyOrWalkNavigation{
 	start = "walking",
@@ -16,7 +17,6 @@ myNav = FlyOrWalkNavigation{
 
 -- [[ Add forklift animation to the scene ]]
 runfile "forklift.lua"
-
 
 --[[ add models to scene ]]
 room = Transform{

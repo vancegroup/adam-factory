@@ -26,18 +26,16 @@ ss:setRenderBinDetails(100, "RenderBin")
 Actions.addFrameAction(
 	function()
 		local wand = gadget.PositionInterface('VJWand')
-		local device = gadget.DigitalInterface("WMButton2")
-		-- local device = gadget.DigitalInterface("VJButton2")
+		-- local device = gadget.DigitalInterface("WMButton2")
+		local device = gadget.DigitalInterface("VJButton2")
 		while true do
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
 			RelativeTo.Room:addChild(wiihelp)
-
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
-
 			RelativeTo.Room:removeChild(wiihelp)
 		end
 	end
