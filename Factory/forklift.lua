@@ -24,34 +24,41 @@ RelativeTo.World:addChild(forklift)
 Actions.addFrameAction(
 	function()
 		local wand = gadget.PositionInterface('VJWand')
-		local device = gadget.DigitalInterface("WMButtonMinus")
+		-- local device = gadget.DigitalInterface("WMButtonMinus")
+		local device = gadget.DigitalInterface("VJButton1")
 		while true do
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
+			-- get height of the user
+			-- local height = gadget.PositionInterface("VJHead").position:y()
 			--get forklifts position (currently in the world)
 			local world_pose = forklift.Matrix
 			--remove the forklift from the world
 			RelativeTo.World:removeChild(forklift)
 			--calculate room position with respect to world
 			local room_pose = transformMatrixWorldToRoom(world_pose)
-			--	--update the position of the forklift to the room position
+			--update the position of the forklift to the room position
 			forklift.Matrix = room_pose
 			--add forklift to room
 			RelativeTo.Room:addChild(forklift)
+			-- adjust height of user
+			RelativeTo.World:preMult(osg.Matrixd.translate(0, 1, 0))
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
-			--get forklifts position (currently in room)
+			-- get forklifts position (currently in room)
 			local room_pose = forklift.Matrix
-			--remove forlift from room
+			-- remove forlift from room
 			RelativeTo.Room:removeChild(forklift)
-			--"transform" the forklifts position with respect to the world
+			-- "transform" the forklifts position with respect to the world
 			local world_pose = transformMatrixRoomToWorld(room_pose)
-			--update the position of the forklift to the world position
+			-- update the position of the forklift to the world position
 			forklift.Matrix = world_pose
-			--add forklift to world
+			-- add forklift to world
 			RelativeTo.World:addChild(forklift)
+			-- adjust height of user
+			RelativeTo.World:preMult(osg.Matrixd.translate(0, -1, 0))
 		end
 	end
 )

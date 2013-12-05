@@ -7,7 +7,7 @@ require("getScriptFilename")
 vrjLua.appendToModelSearchPath(getScriptFilename())
 dofile(vrjLua.findInModelSearchPath([[navigation.lua]]))
 dofile(vrjLua.findInModelSearchPath([[helpMenu.lua]]))
-runfile "forklift.lua"
+runfile[[forklift.lua]]
 runfile[[navigation.lua]]
 
 myNav = Navigation{
@@ -15,10 +15,10 @@ myNav = Navigation{
         initiateRotationButton1 = gadget.DigitalInterface("WMButtonLeft"),                
         start = "walking",
         initiateRotationButton2 = gadget.DigitalInterface("WMButtonRight"),                
-        moveButton = gadget.DigitalInterface("VJButton0") -- default is VJButton0
-        dropToGroundWhenWalking = true -- default is true
-        rate = 1.5 -- default is 1.5
-        rotRate = .5 -- default is .5
+        moveButton = gadget.DigitalInterface("VJButton0"), -- default is VJButton0
+        dropToGroundWhenWalking = true, -- default is true
+        rate = 1.5, -- default is 1.5
+        rotRate = .5, -- default is .5
 }
 --optional methods
 -- myNav:switchToNavigation("driving")
