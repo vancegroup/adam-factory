@@ -7,16 +7,23 @@ require("getScriptFilename")
 vrjLua.appendToModelSearchPath(getScriptFilename())
 dofile(vrjLua.findInModelSearchPath([[navigation.lua]]))
 dofile(vrjLua.findInModelSearchPath([[helpMenu.lua]]))
-
-myNav = FlyOrWalkNavigation{
-	start = "walking",
-	switchButton = gadget.DigitalInterface("WMButtonPlus"),
-	initiateRotationButton1 = gadget.DigitalInterface("WMButtonLeft"),
-	initiateRotationButton2 = gadget.DigitalInterface("WMButtonRight"),
-}
-
--- [[ Add forklift animation to the scene ]]
 runfile "forklift.lua"
+runfile[[navigation.lua]]
+
+myNav = Navigation{
+        switchButton = gadget.DigitalInterface("WMButtonPlus"),
+        initiateRotationButton1 = gadget.DigitalInterface("WMButtonLeft"),                
+        start = "walking",
+        initiateRotationButton2 = gadget.DigitalInterface("WMButtonRight"),                
+        moveButton = gadget.DigitalInterface("VJButton0") -- default is VJButton0
+        dropToGroundWhenWalking = true -- default is true
+        rate = 1.5 -- default is 1.5
+        rotRate = .5 -- default is .5
+}
+--optional methods
+-- myNav:switchToNavigation("driving")
+-- myNav:startRotating() --runs automatically at the start of the frame action
+-- myNav:stopRotating()
 
 --[[ add models to scene ]]
 room = Transform{
