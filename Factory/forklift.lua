@@ -24,8 +24,8 @@ RelativeTo.World:addChild(forklift)
 Actions.addFrameAction(
 	function()
 		local wand = gadget.PositionInterface('VJWand')
-		-- local device = gadget.DigitalInterface("WMButtonMinus")
-		local device = gadget.DigitalInterface("VJButton2")
+		local device = gadget.DigitalInterface("WMButtonMinus")
+		-- local device = gadget.DigitalInterface("VJButton2")
 		while true do
 			repeat
 				Actions.waitForRedraw()
@@ -62,3 +62,36 @@ Actions.addFrameAction(
 		end
 	end
 )
+
+-- controlling the forklift in 3rd person
+-- frame action for moving forward
+-- Actions.addFrameAction(
+	-- function()
+		-- local wand = gadget.PositionInterface('VJWand')
+		-- local device = gadget.DigitalInterface("VJButton2")
+		-- while true do
+			-- repeat
+				-- Actions.waitForRedraw()
+			-- until device.pressed
+			-- local dt = Actions.waitForRedraw()
+			-- local rate = 1
+			-- forklift:preMult(osg.Matrixd.translate(0, 0, -(rate * dt)))
+		-- end
+	-- end
+-- )
+
+-- frame action for turning left
+-- Actions.addFrameAction(
+	-- function()
+		-- local wand = gadget.PositionInterface('VJWand')
+		-- local device = gadget.DigitalInterface("VJButton1")
+		-- while true do
+			-- repeat
+				-- Actions.waitForRedraw()
+			-- until device.pressed
+			-- local dt = Actions.waitForRedraw()
+			-- local rate = 5
+			-- forklift:preMult(osg.Matrix.rotate(rate * dt, 0, 1, 0))
+		-- end
+	-- end
+-- )
