@@ -25,13 +25,15 @@ Actions.addFrameAction(
 	function()
 		local wand = gadget.PositionInterface('VJWand')
 		-- local device = gadget.DigitalInterface("WMButtonMinus")
-		local device = gadget.DigitalInterface("VJButton1")
+		local device = gadget.DigitalInterface("VJButton2")
 		while true do
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
 			-- get height of the user
-			-- local height = gadget.PositionInterface("VJHead").position:y()
+			local height = gadget.PositionInterface("VJHead").position:y()
+			-- adjust height of user
+			RelativeTo.World:postMult(osg.Matrixd.translate(0, -1 - height, 0))
 			--get forklifts position (currently in the world)
 			local world_pose = forklift.Matrix
 			--remove the forklift from the world
@@ -42,8 +44,6 @@ Actions.addFrameAction(
 			forklift.Matrix = room_pose
 			--add forklift to room
 			RelativeTo.Room:addChild(forklift)
-			-- adjust height of user
-			RelativeTo.World:preMult(osg.Matrixd.translate(0, 1, 0))
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
@@ -58,7 +58,7 @@ Actions.addFrameAction(
 			-- add forklift to world
 			RelativeTo.World:addChild(forklift)
 			-- adjust height of user
-			RelativeTo.World:preMult(osg.Matrixd.translate(0, -1, 0))
+			RelativeTo.World:preMult(osg.Matrixd.translate(0, 1 + height, 0))
 		end
 	end
 )
