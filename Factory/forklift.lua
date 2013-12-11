@@ -33,7 +33,7 @@ Actions.addFrameAction(
 			-- get height of the user
 			local height = gadget.PositionInterface("VJHead").position:y()
 			-- adjust height of user
-			RelativeTo.World:postMult(osg.Matrixd.translate(0, -1 - height, 0))
+			RelativeTo.World:postMult(osg.Matrixd.translate(0, -math.abs(1.925 - height), 0))
 			--get forklifts position (currently in the world)
 			local world_pose = forklift.Matrix
 			--remove the forklift from the world
@@ -44,6 +44,7 @@ Actions.addFrameAction(
 			forklift.Matrix = room_pose
 			--add forklift to room
 			RelativeTo.Room:addChild(forklift)
+			myNav:switchToNavigation("driving")
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
@@ -58,7 +59,8 @@ Actions.addFrameAction(
 			-- add forklift to world
 			RelativeTo.World:addChild(forklift)
 			-- adjust height of user
-			RelativeTo.World:preMult(osg.Matrixd.translate(0, 1 + height, 0))
+			RelativeTo.World:preMult(osg.Matrixd.translate(0, math.abs(1.925 + height), 0))
+			myNav:switchToNavigation("walking")
 		end
 	end
 )
@@ -90,7 +92,7 @@ Actions.addFrameAction(
 				-- Actions.waitForRedraw()
 			-- until device.pressed
 			-- local dt = Actions.waitForRedraw()
-			-- local rate = 5
+			-- local rate = 2
 			-- forklift:preMult(osg.Matrix.rotate(rate * dt, 0, 1, 0))
 		-- end
 	-- end
