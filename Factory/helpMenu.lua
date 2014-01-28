@@ -1,4 +1,3 @@
-require "Actions"
 require "gldef"
 
 local wiihelp = Transform{
@@ -25,7 +24,6 @@ ss:setRenderBinDetails(100, "RenderBin")
 
 Actions.addFrameAction(
 	function()
-		local wand = gadget.PositionInterface('VJWand')
 		local device = gadget.DigitalInterface("WMButton2")
 		-- local device = gadget.DigitalInterface("VJButton2")
 		while true do
