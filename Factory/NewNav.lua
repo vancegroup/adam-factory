@@ -4,6 +4,11 @@ osgnav.removeStandardNavigation()
 --for testing with hydra
 vrjKernel.loadConfigFile[[H:/Documents/adam-factory/factory/RazerHydra.jconf]]
 
+
+--setup intial height
+height = getHeadPositionInWorld():y()
+worldHeight = RelativeTo.World.Matrix:getTrans():y()
+print(worldHeight)
 -- load model of forklift
 forklift = MatrixTransform{
 	position = {0, 0, 0 },
@@ -12,7 +17,7 @@ forklift = MatrixTransform{
 		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
 	}
 }
-RelativeTo.World:addChild(forklift)
+-- RelativeTo.World:addChild(forklift)
 
 -- helper  functions
 local getRoomToWorld = function()
@@ -64,7 +69,11 @@ end
 local function base_navigation_with_forklift_rc()
 	local translationRate = 1
 	local rotationRate = 2
-		
+
+
+	moveforkliftToWorld()
+	-- translateWorld(0, math.abs(1.6 - height), 0)
+	
 	-- loop to control world translation/rotation and forklift translation/rotation
 	while true do
 		local dt = Actions.waitForRedraw()
@@ -112,23 +121,59 @@ local function base_navigation_with_forklift_rc()
 	end	
 end
 
+function moveForkliftToRoom()
+	print("moving forklift to room")
+	local world_pose = forklift.Matrix
+	-- calculate room position with respect to world
+	local room_pose = transformMatrixWorldToRoom(world_pose)
+	-- update the position of the forklift to the room position
+	forklift.Matrix = room_pose
+	-- remove the forklift from the world
+	RelativeTo.World:removeChild(forklift)
+	-- add forklift to room
+	RelativeTo.Room:addChild(forklift)
+end
+
+
+function moveforkliftToWorld()
+	print("moving forklift to world")
+	-- get forklifts position (currently in room)
+	local room_pose = forklift.Matrix
+	-- "transform" the forklifts position with respect to the world
+	local world_pose = transformMatrixRoomToWorld(room_pose)
+	-- update the position of the forklift to the world position
+	forklift.Matrix = world_pose
+	-- remove forklift from room
+	RelativeTo.Room:removeChild(forklift)
+	-- add forklift to world
+	RelativeTo.World:addChild(forklift)
+end
+
 local function forklift_drive_navigation()
 	local translationRate = 1
 	local rotationRate = 1
 	local incrementalRotation = osg.Quat()
 
+	height = getHeadPositionInWorld():y()
+	translateWorld(0, -math.abs(1.6 - height), 0)
+
+	moveForkliftToRoom()
 	while true do
 		local dt = Actions.waitForRedraw()
 		
 		-- world translation
 		if not joystickYIsCentered() then
             local translate_value_z = translationRate * joystickY.centered * dt
-			 forkliftRotation = forklift.Matrix:getRotate() -- quat
-			 newXform = osg.Matrixd.rotate(forkliftRotation)
-			 currentVec = Vec(0,0,translate_value_z) 
-			 currentVec = currentVec*newXform 
-            print("DRIVING")
-            translateWorld(currentVec:x(),currentVec:y(),currentVec:z())
+			--get the rotational component of the forklift 
+			 local forkliftQuat = forklift.Matrix:getRotate()
+			 --create a matrix using the forklifts rotation (quat)
+			 local forkliftRotationMatrix = osg.Matrixd.rotate(forkliftQuat)
+			 --normal world translation vector (what we did before)
+			 local currentVec = Vec(0,0,translate_value_z) 
+			 --account for forklifts rotation relative to world
+			 local postVec = currentVec*forkliftRotationMatrix 
+            -- print("DRIVING")
+            translateWorld(postVec:x(),0,postVec:z())
         end
 		
 		-- world rotation
@@ -141,51 +186,31 @@ local function forklift_drive_navigation()
 	end
 end
 
--- navigationSwitcher = frameActionSwitcher{
-        -- --switchButton = gadget.DigitalInterface("WMButtonPlus"),
-		-- switchButton = gadget.DigitalInterface("HydraLeftBumper"),
-        -- {base_navigation_with_forklift_rc,"base navigation with forklift RC frame action"},
-		-- {forklift_drive_navigation,"forklift driving frame action"},
--- }
+navigationSwitcher = frameActionSwitcher{
+        --switchButton = gadget.DigitalInterface("WMButtonPlus"),
+		switchButton = gadget.DigitalInterface("HydraLeftBumper"),
+        {base_navigation_with_forklift_rc,"base navigation with forklift RC frame action"},
+		{forklift_drive_navigation,"forklift driving frame action"},
+}
 
 -- [[ frame action for attaching forklift to room and back ]]
-Actions.addFrameAction(
-	function()
-		--local device = gadget.DigitalInterface("WMButtonPlus")
-		local device = gadget.DigitalInterface("HydraLeftBumper")
-		while true do
-			repeat
-				Actions.waitForRedraw()
-			until device.justPressed
+-- Actions.addFrameAction(
+	-- function()
+		-- local device = gadget.DigitalInterface("WMButtonPlus")
+		-- local device = gadget.DigitalInterface("HydraLeftBumper")
+		-- while true do
+			-- repeat
+				-- Actions.waitForRedraw()
+			-- until device.justPressed
 			-- get height of the user
-			local height = getHeadPositionInWorld():y()
+			-- local height = getHeadPositionInWorld():y()
 			-- adjust height of user
-			translateWorld(0, -math.abs(1.6 - height), 0)
-			-- get forklifts position (currently in the world)
-			local world_pose = forklift.Matrix
-			-- remove the forklift from the world
-			RelativeTo.World:removeChild(forklift)
-			-- calculate room position with respect to world
-			local room_pose = transformMatrixWorldToRoom(world_pose)
-			-- update the position of the forklift to the room position
-			forklift.Matrix = room_pose
-			-- add forklift to room
-			RelativeTo.Room:addChild(forklift)
-			repeat
-				Actions.waitForRedraw()
-			until device.justPressed
-			-- get forklifts position (currently in room)
-			local room_pose = forklift.Matrix
-			-- remove forklift from room
-			RelativeTo.Room:removeChild(forklift)
-			-- "transform" the forklifts position with respect to the world
-			local world_pose = transformMatrixRoomToWorld(room_pose)
-			-- update the position of the forklift to the world position
-			forklift.Matrix = world_pose
-			-- add forklift to world
-			RelativeTo.World:addChild(forklift)
+			-- translateWorld(0, -math.abs(1.6 - height), 0)
+			-- repeat
+				-- Actions.waitForRedraw()
+			-- until device.justPressed
 			-- adjust height of user
-			translateWorld(0, math.abs(1.6 - height), 0)
-		end
-	end
-)
+			-- translateWorld(0, math.abs(1.6 - height), 0)
+		-- end
+	-- end
+-- )
