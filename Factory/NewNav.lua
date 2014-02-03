@@ -4,11 +4,6 @@ osgnav.removeStandardNavigation()
 --for testing with hydra
 vrjKernel.loadConfigFile[[H:/Documents/adam-factory/factory/RazerHydra.jconf]]
 
-
---setup intial height
-height = getHeadPositionInWorld():y()
-worldHeight = RelativeTo.World.Matrix:getTrans():y()
-print(worldHeight)
 -- load model of forklift
 forklift = MatrixTransform{
 	position = {0, 0, 0 },
@@ -17,7 +12,7 @@ forklift = MatrixTransform{
 		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
 	}
 }
--- RelativeTo.World:addChild(forklift)
+RelativeTo.World:addChild(forklift)
 
 -- helper  functions
 local getRoomToWorld = function()
@@ -70,11 +65,6 @@ local function base_navigation_with_forklift_rc()
 	local translationRate = 1
 	local rotationRate = 2
 
-
-	moveforkliftToWorld()
-	-- translateWorld(0, math.abs(1.6 - height), 0)
-	
-	-- loop to control world translation/rotation and forklift translation/rotation
 	while true do
 		local dt = Actions.waitForRedraw()
 		
@@ -121,6 +111,7 @@ local function base_navigation_with_forklift_rc()
 	end	
 end
 
+-- function removes forklift from world and adds it to the room
 function moveForkliftToRoom()
 	print("moving forklift to room")
 	local world_pose = forklift.Matrix
@@ -134,7 +125,7 @@ function moveForkliftToRoom()
 	RelativeTo.Room:addChild(forklift)
 end
 
-
+-- function removes forklift from room and adds it to the world
 function moveforkliftToWorld()
 	print("moving forklift to world")
 	-- get forklifts position (currently in room)
@@ -154,10 +145,11 @@ local function forklift_drive_navigation()
 	local rotationRate = 1
 	local incrementalRotation = osg.Quat()
 
+	-- adjust user height and add forklift to room
 	height = getHeadPositionInWorld():y()
 	translateWorld(0, -math.abs(1.6 - height), 0)
-
 	moveForkliftToRoom()
+	
 	while true do
 		local dt = Actions.waitForRedraw()
 		
@@ -186,31 +178,16 @@ local function forklift_drive_navigation()
 	end
 end
 
+-- adjust user height when exiting forklift
+local function adjust_user_height()
+	print("height adjusted")
+	moveforkliftToWorld()
+	translateWorld(0, math.abs(1.6 - height), 0)
+end
+
 navigationSwitcher = frameActionSwitcher{
         --switchButton = gadget.DigitalInterface("WMButtonPlus"),
 		switchButton = gadget.DigitalInterface("HydraLeftBumper"),
         {base_navigation_with_forklift_rc,"base navigation with forklift RC frame action"},
-		{forklift_drive_navigation,"forklift driving frame action"},
+		{forklift_drive_navigation,"forklift driving frame action", adjust_user_height},
 }
-
--- [[ frame action for attaching forklift to room and back ]]
--- Actions.addFrameAction(
-	-- function()
-		-- local device = gadget.DigitalInterface("WMButtonPlus")
-		-- local device = gadget.DigitalInterface("HydraLeftBumper")
-		-- while true do
-			-- repeat
-				-- Actions.waitForRedraw()
-			-- until device.justPressed
-			-- get height of the user
-			-- local height = getHeadPositionInWorld():y()
-			-- adjust height of user
-			-- translateWorld(0, -math.abs(1.6 - height), 0)
-			-- repeat
-				-- Actions.waitForRedraw()
-			-- until device.justPressed
-			-- adjust height of user
-			-- translateWorld(0, math.abs(1.6 - height), 0)
-		-- end
-	-- end
--- )
