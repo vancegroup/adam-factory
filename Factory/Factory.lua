@@ -6,10 +6,8 @@ require("Actions")
 require("getScriptFilename")
 vrjLua.appendToModelSearchPath(getScriptFilename())
 runfile[[frameActionSwitcher.lua]]
-runfile[[navigationHelperFunctions.lua]]
-runfile[[NewNav.lua]]
+runfile[[navigation.lua]]
 runfile[[helpMenu.lua]]
--- runfile[[forklift.lua]]
 
 --[[ add models to scene ]]
 room = Transform{

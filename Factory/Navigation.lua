@@ -1,138 +1,200 @@
 -- MUST REMOVE STANDARD NAVIGATION BEFORE ADDING CUSTOM NAVIGATION
 osgnav.removeStandardNavigation()
 
--- navigation frame actions
-function wand_drive_frame_action()
-    local moveButton1 = gadget.DigitalInterface("VJButton0")
-    local wand = gadget.PositionInterface('VJWand')
-    local rate = 1
-	
-    while true do
-        repeat
-            dt = Actions.waitForRedraw()
-        until moveButton1.justPressed
+-- navigation helper functions
+runfile[[navigationHelperFunctions.lua]]
 
-        while moveButton1.pressed do
-            dt = Actions.waitForRedraw()
-            local translate_value_z = wand.forwardVector:z() * rate * dt
-            print("DRIVING")
-            translateWorld(0, 0, -translate_value_z)
-        end
-    end
+--for testing with hydra
+vrjKernel.loadConfigFile[[H:/Documents/adam-factory/factory/RazerHydra.jconf]]
+
+-- load model of forklift
+forklift = MatrixTransform{
+	position = {0, 0, 0 },
+	Transform{
+		orientation = AngleAxis(Degrees(-90), Axis{0.0, 1.0, 0.0}),
+		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
+	}
+}
+RelativeTo.World:addChild(forklift)
+
+-- helper  functions
+local getRoomToWorld = function()
+	return RelativeTo.World:getInverseMatrix()
 end
 
-function wand_walk_frame_action()
-    local moveButton2 = gadget.DigitalInterface("VJButton0")
-    local wand = gadget.PositionInterface('VJWand')
-    local rate = 1
-	
-	dropUserToGround()
-    
-	while true do
-        repeat
-            dt = Actions.waitForRedraw()
-        until moveButton2.justPressed
+local transformMatrixRoomToWorld = function(m)
+	return m * getRoomToWorld()
+end
 
-        while moveButton2.pressed do
-            dt = Actions.waitForRedraw()
-            local translate_value_x = wand.forwardVector:x() * rate * dt
-            local translate_value_z = wand.forwardVector:z() * rate * dt
+local transformMatrixWorldToRoom = function(m)
+	return m * RelativeTo.World:getMatrix()
+end
+
+-- set up buttons (METaL)
+-- local wand = gadget.PositionInterface('VJWand')
+-- local translateButton = gadget.DigitalInterface("VJButton0")
+-- local joystickX = gadget.AnalogInterface("WMNunchukJoystickX")
+-- local joystickY = gadget.AnalogInterface("WMNunchukJoystickY")
+-- local dPadRight = gadget.DigitalInterface("WMButtonRight")
+-- local dPadLeft = gadget.DigitalInterface("WMButtonLeft")
+
+-- set up buttons (Hydra)
+local wand = gadget.PositionInterface('VJWand')
+local translateButton = gadget.DigitalInterface("HydraLeftMiddleButton")
+local joystickX = gadget.AnalogInterface("HydraLeftJSX")
+local joystickY = gadget.AnalogInterface("HydraLeftJSY")
+local dPadRight = gadget.DigitalInterface("HydraLeftButton2")
+local dPadLeft = gadget.DigitalInterface("HydraLeftButton1")
+
+-- function tests if x-axis of joystick is in center
+local function joystickXIsCentered()
+	if joystickX.centered > -.05 and joystickX.centered < .05 then
+		return true
+	else
+		return false
+	end
+end
+	
+-- function tests if y-axis of joystick is in center
+local function joystickYIsCentered()
+	if joystickY.centered > -.05 and joystickY.centered < .05 then
+		return true
+	else
+		return false
+	end
+end
+
+local function base_navigation_with_forklift_rc()
+	local translationRate = 1
+	local rotationRate = 2
+
+	while true do
+		local dt = Actions.waitForRedraw()
+		
+		-- world translation
+		if translateButton.pressed then
+            local translate_value_x = wand.forwardVector:x() * translationRate * dt
+            local translate_value_z = wand.forwardVector:z() * translationRate * dt
             print("WALKING")
             translateWorld(-translate_value_x, 0, -translate_value_z)
         end
-    end
-end
-
-function wand_fly_frame_action()
-    local moveButton3 = gadget.DigitalInterface("VJButton0")
-    local wand = gadget.PositionInterface('VJWand')
-    local rate = 1
-    while true do
-        repeat
-            dt = Actions.waitForRedraw()
-        until moveButton3.justPressed
-
-        while moveButton3.pressed do
-            dt = Actions.waitForRedraw()
-            local translate_value_x = wand.forwardVector:x() * rate * dt
-            local translate_value_y = wand.forwardVector:y() * rate * dt
-            local translate_value_z = wand.forwardVector:z() * rate * dt
-            print("FLYING")
-            translateWorld(-translate_value_x, -translate_value_y, -translate_value_z)
-        end
-    end
-end
-
-function wrist_deviation_rotation_frame_action()
-	local rotateButton1 = gadget.DigitalInterface("WMButtonRight")
-	local rotateButton2 = gadget.DigitalInterface("WMButtonLeft")
-	local wand = gadget.PositionInterface('VJWand')
-	local rotRate = 0.5
-
-	local function getWandForwardVectorWithoutY()
-		return osg.Vec3d(wand.forwardVector:x(), 0, wand.forwardVector:z())
-	end
-
-	while true do
-		repeat
-			dt = Actions.waitForRedraw()
-		until rotateButton1.pressed or rotateButton2.pressed  
-
-		local initialWandForwardVector = getWandForwardVectorWithoutY()
-		local maximumRotation = osg.Quat()
-		local incrementalRotation = osg.Quat()
-
-		while rotateButton1.pressed or rotateButton2.pressed do
-			local dt = Actions.waitForRedraw()
-			local newForwardVec = getWandForwardVectorWithoutY()
-			maximumRotation:makeRotate(newForwardVec, initialWandForwardVector)
-			incrementalRotation:slerp(dt * rotRate, osg.Quat(), maximumRotation)
-			local newHeadPosition = getHeadPositionInWorld()
-			rotateWorldAboutPoint(newHeadPosition, incrementalRotation)
-		end
-	end
-end
-
-function nunchuck_rotation_frame_action()
-	local leftJoystickX = gadget.AnalogInterface("WMNunchukJoystickX")
-	local rotRate = 1
-
-	local function joystickIsCentered()
-		if leftJoystickX.centered > -.05 and leftJoystickX.centered < .05 then
-			return true
-		else
-			return false
-		end
-	end
-	
-	while true do
-		repeat
-				dt = Actions.waitForRedraw()
-		until not joystickIsCentered()
-
-		local incrementalRotation = osg.Quat()
-
-		while not joystickIsCentered() do
-			local angle = leftJoystickX.centered * rotRate * dt
+		
+		-- world rotation
+		if dPadRight.pressed then
+			local incrementalRotation = osg.Quat()
+			local angle = rotationRate * dt
 			incrementalRotation:makeRotate(angle, Vec(0, 1, 0))
 			local newHeadPosition = getHeadPositionInWorld()
 			rotateWorldAboutPoint(newHeadPosition, incrementalRotation)
-			local dt = Actions.waitForRedraw()
+		end
+		
+		if dPadLeft.pressed then
+			local incrementalRotation = osg.Quat()
+			local angle = -rotationRate * dt
+			incrementalRotation:makeRotate(angle, Vec(0, 1, 0))
+			local newHeadPosition = getHeadPositionInWorld()
+			rotateWorldAboutPoint(newHeadPosition, incrementalRotation)
+		end
+		
+		-- forklift translation
+		if not joystickYIsCentered() then
+			local translationRate = 1
+			local translate_value_z = translationRate * joystickY.centered * dt
+			forklift:preMult(osg.Matrixd.translate(0, 0, -translate_value_z))
+			print("moving forklift")
+		end
+		
+		--forklift rotation
+		if not joystickXIsCentered() then
+			local rotRate = 1
+			local rotation_velocity = rotRate * joystickX.centered * dt
+			forklift:preMult(osg.Matrixd.rotate(-rotation_velocity, 0, 1, 0))
+			print("turning forklift")
+		end
+	end	
+end
+
+-- function removes forklift from world and adds it to the room
+function moveForkliftToRoom()
+	print("moving forklift to room")
+	local world_pose = forklift.Matrix
+	-- calculate room position with respect to world
+	local room_pose = transformMatrixWorldToRoom(world_pose)
+	-- update the position of the forklift to the room position
+	forklift.Matrix = room_pose
+	-- remove the forklift from the world
+	RelativeTo.World:removeChild(forklift)
+	-- add forklift to room
+	RelativeTo.Room:addChild(forklift)
+end
+
+-- function removes forklift from room and adds it to the world
+function moveforkliftToWorld()
+	print("moving forklift to world")
+	-- get forklifts position (currently in room)
+	local room_pose = forklift.Matrix
+	-- "transform" the forklifts position with respect to the world
+	local world_pose = transformMatrixRoomToWorld(room_pose)
+	-- update the position of the forklift to the world position
+	forklift.Matrix = world_pose
+	-- remove forklift from room
+	RelativeTo.Room:removeChild(forklift)
+	-- add forklift to world
+	RelativeTo.World:addChild(forklift)
+end
+
+local function forklift_drive_navigation()
+	local translationRate = 1
+	local rotationRate = 1
+	local incrementalRotation = osg.Quat()
+
+	-- adjust user height and add forklift to room
+	-- userX = getHeadPositionInWorld():x()
+	height = getHeadPositionInWorld():y()
+	-- userZ= getHeadPositionInWorld():z()
+	-- forklift:setMatrix(osg.Matrixd.rotate (0, 0, 1, 0))
+	-- forklift:setMatrix(osg.Matrixd.translate(userX, 0, userZ))
+	translateWorld(0, -math.abs(1.6 - height), 0)
+	moveForkliftToRoom()
+	
+	while true do
+		local dt = Actions.waitForRedraw()
+		
+		-- world translation
+		if not joystickYIsCentered() then
+            local translate_value_z = translationRate * joystickY.centered * dt
+			--get the rotational component of the forklift 
+			 local forkliftQuat = forklift.Matrix:getRotate()
+			 --create a matrix using the forklifts rotation (quat)
+			 local forkliftRotationMatrix = osg.Matrixd.rotate(forkliftQuat)
+			 --normal world translation vector (what we did before)
+			 local currentVec = Vec(0,0,translate_value_z) 
+			 --account for forklifts rotation relative to world
+			 local postVec = currentVec*forkliftRotationMatrix 
+            -- print("DRIVING")
+            translateWorld(postVec:x(),0,postVec:z())
+        end
+		
+		-- world rotation
+		if not joystickXIsCentered() then
+			local angle = joystickX.centered * rotationRate * dt
+			incrementalRotation:makeRotate(angle, Vec(0, 1, 0))
+			local newHeadPosition = getHeadPositionInWorld()
+			rotateWorldAboutPoint(newHeadPosition, incrementalRotation)
 		end
 	end
 end
 
--- frame action switcher for walking and flying translation
-navigationSwitcher = frameActionSwitcher{
-        switchButton = gadget.DigitalInterface("WMButtonPlus"),
-        {wand_walk_frame_action,"walking frame action"},
-		{wand_drive_frame_action,"driving frame action"},
-        {wand_fly_frame_action,"flying frame action"},
-}
+-- adjust user height when exiting forklift
+local function adjust_user_height()
+	print("height adjusted")
+	moveforkliftToWorld()
+	translateWorld(0, math.abs(1.6 - height), 0)
+end
 
--- frame action switcher for walking and driving rotation
-rotation_walk_drive_Switcher = frameActionSwitcher{
-        switchButton = gadget.DigitalInterface("WMButtonMinus"),
-        {wrist_deviation_rotation_frame_action,"wrist deviation rotation frame action"},
-        {nunchuck_rotation_frame_action,"nunchuck rotation frame action"},
+navigationSwitcher = frameActionSwitcher{
+        --switchButton = gadget.DigitalInterface("WMButtonPlus"),
+		switchButton = gadget.DigitalInterface("HydraLeftBumper"),
+        {base_navigation_with_forklift_rc,"base navigation with forklift RC frame action"},
+		{forklift_drive_navigation,"forklift driving frame action", adjust_user_height},
 }
