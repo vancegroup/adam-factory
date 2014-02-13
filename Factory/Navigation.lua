@@ -5,7 +5,7 @@ osgnav.removeStandardNavigation()
 runfile[[navigationHelperFunctions.lua]]
 
 --for testing with hydra
-vrjKernel.loadConfigFile[[H:/Documents/adam-factory/factory/RazerHydra.jconf]]
+-- vrjKernel.loadConfigFile[[H:/Documents/adam-factory/factory/RazerHydra.jconf]]
 
 -- load model of forklift
 forklift = MatrixTransform{
@@ -31,20 +31,20 @@ local transformMatrixWorldToRoom = function(m)
 end
 
 -- set up buttons (METaL)
--- local wand = gadget.PositionInterface('VJWand')
--- local translateButton = gadget.DigitalInterface("VJButton0")
--- local joystickX = gadget.AnalogInterface("WMNunchukJoystickX")
--- local joystickY = gadget.AnalogInterface("WMNunchukJoystickY")
--- local dPadRight = gadget.DigitalInterface("WMButtonRight")
--- local dPadLeft = gadget.DigitalInterface("WMButtonLeft")
+local wand = gadget.PositionInterface('VJWand')
+local translateButton = gadget.DigitalInterface("VJButton0")
+local joystickX = gadget.AnalogInterface("WMNunchukJoystickX")
+local joystickY = gadget.AnalogInterface("WMNunchukJoystickY")
+local dPadRight = gadget.DigitalInterface("WMButtonRight")
+local dPadLeft = gadget.DigitalInterface("WMButtonLeft")
 
 -- set up buttons (Hydra)
-local wand = gadget.PositionInterface('VJWand')
-local translateButton = gadget.DigitalInterface("HydraLeftMiddleButton")
-local joystickX = gadget.AnalogInterface("HydraLeftJSX")
-local joystickY = gadget.AnalogInterface("HydraLeftJSY")
-local dPadRight = gadget.DigitalInterface("HydraLeftButton2")
-local dPadLeft = gadget.DigitalInterface("HydraLeftButton1")
+-- local wand = gadget.PositionInterface('VJWand')
+-- local translateButton = gadget.DigitalInterface("HydraLeftMiddleButton")
+-- local joystickX = gadget.AnalogInterface("HydraLeftJSX")
+-- local joystickY = gadget.AnalogInterface("HydraLeftJSY")
+-- local dPadRight = gadget.DigitalInterface("HydraLeftButton2")
+-- local dPadLeft = gadget.DigitalInterface("HydraLeftButton1")
 
 -- function tests if x-axis of joystick is in center
 local function joystickXIsCentered()
