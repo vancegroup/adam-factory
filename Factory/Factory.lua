@@ -6,6 +6,7 @@ require("Actions")
 require("getScriptFilename")
 vrjLua.appendToModelSearchPath(getScriptFilename())
 runfile[[frameActionSwitcher.lua]]
+runfile[[sound.lua]]
 runfile[[navigation.lua]]
 runfile[[helpMenu.lua]]
 
