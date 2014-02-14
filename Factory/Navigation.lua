@@ -149,11 +149,7 @@ local function forklift_drive_navigation()
 	local incrementalRotation = osg.Quat()
 
 	-- adjust user height and add forklift to room
-	-- userX = getHeadPositionInWorld():x()
 	height = getHeadPositionInWorld():y()
-	-- userZ= getHeadPositionInWorld():z()
-	-- forklift:setMatrix(osg.Matrixd.rotate (0, 0, 1, 0))
-	-- forklift:setMatrix(osg.Matrixd.translate(userX, 0, userZ))
 	translateWorld(0, -math.abs(1.6 - height), 0)
 	moveForkliftToRoom()
 	
@@ -193,8 +189,8 @@ local function adjust_user_height()
 end
 
 navigationSwitcher = frameActionSwitcher{
-        --switchButton = gadget.DigitalInterface("WMButtonPlus"),
-		switchButton = gadget.DigitalInterface("HydraLeftBumper"),
+        switchButton = gadget.DigitalInterface("WMButtonPlus"),
+		-- switchButton = gadget.DigitalInterface("HydraLeftBumper"),
         {base_navigation_with_forklift_rc,"base navigation with forklift RC frame action"},
 		{forklift_drive_navigation,"forklift driving frame action", adjust_user_height},
 }
