@@ -56,9 +56,12 @@ play_forklift_engine_stop = function()
 	forklift_engine_stop_sound:trigger(1)
 end
 
+-- set up buttons (METaL)
 local switchButton = gadget.DigitalInterface("WMButtonPlus")
 local joystickX = gadget.AnalogInterface("WMNunchukJoystickX")
 local joystickY = gadget.AnalogInterface("WMNunchukJoystickY")
+
+-- set up buttons (Hydra)
 -- local switchButton = gadget.DigitalInterface("HydraLeftBumper")
 -- local joystickX = gadget.AnalogInterface("HydraLeftJSX")
 -- local joystickY = gadget.AnalogInterface("HydraLeftJSY")
@@ -92,11 +95,11 @@ end
 Actions.addFrameAction(
 	function()
 		while true do
-			print("forklift rc")
+			-- rc mode
 			repeat
 				if not joystickYIsCentered() or not joystickXIsCentered() then
 					play_forklift_running_sound()
-					forklift_running_sound:setPitchBend((math.abs(joystickY.centered) * .75 + 1))
+					forklift_running_sound:setPitchBend((math.abs(joystickY.centered) * .5 + 1))
 					forklift_running_sound:setVolume((forklift_distance_from_user() + 1)^-1.1)
 				end
 				
@@ -121,10 +124,10 @@ Actions.addFrameAction(
 			Actions.waitSeconds(1)
 			play_forklift_running_sound()
 			
-			print("forklift drive")
+			-- driving mode
 			repeat
 			
-				forklift_running_sound:setPitchBend((math.abs(joystickY.centered) * .75 + 1))
+				forklift_running_sound:setPitchBend((math.abs(joystickY.centered) * .5 + 1))
 		
 				if joystickY.centered < -.5 then
 					play_forklift_backup_sound()
