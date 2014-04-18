@@ -12,7 +12,7 @@ forklift = MatrixTransform{
 	position = {0, 0, 0 },
 	Transform{
 		orientation = AngleAxis(Degrees(-90), Axis{0.0, 1.0, 0.0}),
-		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift.osg]]
+		Model[[Factory Models/OSG/Shop Carts and Fork Lifts/Forklift2.osg]]
 	}
 }
 RelativeTo.World:addChild(forklift)
@@ -48,7 +48,7 @@ local dPadLeft = gadget.DigitalInterface("WMButtonLeft")
 
 -- function tests if x-axis of joystick is in center
 local function joystickXIsCentered()
-	if joystickX.centered > -.1 and joystickX.centered < .1 then
+	if joystickX.centered > -.2 and joystickX.centered < .2 then
 		return true
 	else
 		return false
@@ -57,7 +57,7 @@ end
 	
 -- function tests if y-axis of joystick is in center
 local function joystickYIsCentered()
-	if joystickY.centered > -.1 and joystickY.centered < .1 then
+	if joystickY.centered > -.2 and joystickY.centered < .2 then
 		return true
 	else
 		return false

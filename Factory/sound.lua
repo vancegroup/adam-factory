@@ -68,7 +68,7 @@ local joystickY = gadget.AnalogInterface("WMNunchukJoystickY")
 		
 -- function tests if y-axis of joystick is in center
 local function joystickXIsCentered()
-	if joystickX.centered > -.05 and joystickX.centered < .05 then
+	if joystickX.centered > -.2 and joystickX.centered < .2 then
 		return true
 	else
 		return false
@@ -77,7 +77,7 @@ end
 
 -- function tests if x-axis of joystick is in center
 local function joystickYIsCentered()
-	if joystickY.centered > -.05 and joystickY.centered < .05 then
+	if joystickY.centered > -.2 and joystickY.centered < .2 then
 		return true
 	else
 		return false
