@@ -48,7 +48,7 @@ local dPadLeft = gadget.DigitalInterface("WMButtonLeft")
 
 -- function tests if x-axis of joystick is in center
 local function joystickXIsCentered()
-	if joystickX.centered > -.05 and joystickX.centered < .05 then
+	if joystickX.centered > -.1 and joystickX.centered < .1 then
 		return true
 	else
 		return false
@@ -57,7 +57,7 @@ end
 	
 -- function tests if y-axis of joystick is in center
 local function joystickYIsCentered()
-	if joystickY.centered > -.05 and joystickY.centered < .05 then
+	if joystickY.centered > -.1 and joystickY.centered < .1 then
 		return true
 	else
 		return false
