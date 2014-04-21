@@ -1,15 +1,6 @@
 require "AddAppDirectory"
 AddAppDirectory()
 
---[[ Add navigation to the scene ]]
-require("Actions")
-require("getScriptFilename")
-vrjLua.appendToModelSearchPath(getScriptFilename())
-runfile[[frameActionSwitcher.lua]]
-runfile[[sound.lua]]
-runfile[[navigation.lua]]
-runfile[[helpMenu.lua]]
-
 --[[ add models to scene ]]
 room = Transform{
 	position = {-10, 0, 5},
