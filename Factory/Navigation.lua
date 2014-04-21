@@ -25,7 +25,6 @@ function wand_walk_frame_action()
             dt = Actions.waitForRedraw()
             local translate_value_x = wand.forwardVector:x() * rate * dt
             local translate_value_z = wand.forwardVector:z() * rate * dt
-            print("WALKING")
             translateWorld(-translate_value_x, 0, -translate_value_z)
         end
     end
@@ -43,7 +42,6 @@ function wand_fly_frame_action()
             local translate_value_x = wand.forwardVector:x() * rate * dt
             local translate_value_y = wand.forwardVector:y() * rate * dt
             local translate_value_z = wand.forwardVector:z() * rate * dt
-            print("FLYING")
             translateWorld(-translate_value_x, -translate_value_y, -translate_value_z)
         end
     end

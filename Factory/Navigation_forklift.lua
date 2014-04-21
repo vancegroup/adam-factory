@@ -75,7 +75,6 @@ local function base_navigation_with_forklift_rc()
 		if translateButton.pressed then
             local translate_value_x = wand.forwardVector:x() * translationRate * dt
             local translate_value_z = wand.forwardVector:z() * translationRate * dt
-            print("WALKING")
             translateWorld(-translate_value_x, 0, -translate_value_z)
         end
 		
@@ -101,7 +100,6 @@ local function base_navigation_with_forklift_rc()
 			local translationRate = 1
 			local translate_value_z = translationRate * joystickY.centered * dt
 			forklift:preMult(osg.Matrixd.translate(0, 0, -translate_value_z))
-			print("moving forklift")
 		end
 		
 		--forklift rotation
@@ -109,7 +107,6 @@ local function base_navigation_with_forklift_rc()
 			local rotRate = 1
 			local rotation_velocity = rotRate * joystickX.centered * dt
 			forklift:preMult(osg.Matrixd.rotate(-rotation_velocity, 0, 1, 0))
-			print("turning forklift")
 		end
 	end	
 end
