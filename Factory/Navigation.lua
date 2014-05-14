@@ -50,7 +50,7 @@ end
 
 local function rotation_navigation()
 	local translationRate = 1
-	local rotationRate = 2
+	local rotationRate = 1
 
 	while true do
 		local dt = Actions.waitForRedraw()

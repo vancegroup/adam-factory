@@ -66,7 +66,7 @@ end
 
 local function base_navigation_with_forklift_rc()
 	local translationRate = 1
-	local rotationRate = 2
+	local rotationRate = 1
 
 	while true do
 		local dt = Actions.waitForRedraw()
