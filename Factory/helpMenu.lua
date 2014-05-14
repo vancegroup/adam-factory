@@ -2,7 +2,7 @@ require "gldef"
 
 runfile[[frameActionSwitcher.lua]]
 
-local walking_help_menu = Transform{
+local no_forklift_help_menu = Transform{
 	position={0,1.3,0},
 	orientation=AngleAxis(Degrees(90), Axis{1.0,0.0,0.0}),
 	scale=.5,
@@ -32,11 +32,11 @@ Actions.addFrameAction(
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
-			RelativeTo.Room:addChild(walking_help_menu)
+			RelativeTo.Room:addChild(no_forklift_help_menu)
 			repeat
 				Actions.waitForRedraw()
 			until device.justPressed
-			RelativeTo.Room:removeChild(walking_help_menu)
+			RelativeTo.Room:removeChild(no_forklift_help_menu)
 		end
 	end
 )
